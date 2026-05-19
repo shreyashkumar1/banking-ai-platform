@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  # Airflow webserver for local DAG development
+  airflow:
+    image: apache/airflow:2.8.1-python3.11
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=false
+      - AIRFLOW__CORE__DAGS_FOLDER=/opt/airflow/dags
+    volumes:
+      - ./src/pipelines:/opt/airflow/dags
+      - ./src:/opt/airflow/src
+    ports:
+      - "8080:8080"
+    command: standalone
+
+  # Run tests in container
+  test:
+    build: .
+    command: pytest tests/ -v --cov=src --cov-report=term-missing
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+
+  # Run embedding engine locally
+  embedding:
+    build: .
+    command: python -m src.ai.embedding_engine --mode=local
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./src:/app/src
+      - ./config:/app/config
