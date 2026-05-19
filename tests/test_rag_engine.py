@@ -40,7 +40,7 @@ class TestSQLValidator:
         assert valid is False
 
     def test_blocks_injection_via_semicolon(self):
-        sql = "SELECT * FROM analytics.fact_transactions; DROP TABLE analytics.dim_customer"
+        sql = "SELECT * FROM analytics.fact_transactions; SELECT * FROM analytics.dim_customer"
         valid, err = SQLValidator.validate(sql, self.ALLOWED_TABLES)
         assert valid is False
         assert "Multiple SQL statements" in err

@@ -4,7 +4,7 @@
 Works without GCP credentials. Run the demo in 60 seconds.
 
 ```bash
-git clone https://github.com/shreyashkumar/banking-ai-platform
+git clone https://github.com/shreyashkumar1/banking-ai-platform
 cd banking-ai-platform
 pip install numpy
 PYTHONPATH=. python demo.py

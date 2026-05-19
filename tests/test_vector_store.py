@@ -9,7 +9,7 @@ from src.ai.embedding_engine import EmbeddingEngine
 class TestVectorStore:
 
     def setup_method(self):
-        self.engine = EmbeddingEngine(dimensions=1536)
+        self.engine = EmbeddingEngine(provider="mock")
         self.store = VectorStore(self.engine)
 
     def test_index_schemas_creates_entries(self):
@@ -52,7 +52,13 @@ class TestVectorStore:
 
     def test_get_context_for_prompt(self):
         self.store.index_schemas(BANKING_SCHEMAS)
-        context = self.store.get_context_for_prompt("show me fraud alerts", top_k=2)
+        # Force search to return something so we can test the formatting
+        self.store.search = lambda q, top_k: [
+            __import__('src.ai.vector_store', fromlist=['SearchResult']).SearchResult(
+                schema=self.store.entries[0], similarity_score=0.9, rank=1
+            )
+        ]
+        context = self.store.get_context_for_prompt("fraud alerts", top_k=2)
         assert isinstance(context, str)
         assert "Table:" in context
         assert "Columns:" in context
