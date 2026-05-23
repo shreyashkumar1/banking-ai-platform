@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💬 Interview Prep: TCS/Sainsbury — Banking AI Platform Portfolio</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Highlight.js VS2015 Dark Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --sidebar-bg: rgba(22, 27, 34, 0.7);
+            --content-bg: #161b22;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #c9d1d9;
+            --text-bright: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --accent-bg: rgba(56, 139, 253, 0.15);
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Glassmorphic Design */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: flex-col;
+            padding: 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background: var(--accent-bg);
+            color: var(--accent-color);
+            border-color: rgba(56, 139, 253, 0.3);
+            font-weight: 600;
+        }
+
+        /* Main Content Panel */
+        main {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 60px 80px;
+            max-width: 1200px;
+            min-width: 0; /* Prevents overflow issues */
+        }
+
+        .content-card {
+            background: var(--content-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Markdown Styling (Modernized GitHub Dark look) */
+        .markdown-body {
+            font-size: 16px;
+        }
+
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            color: var(--text-bright);
+            font-weight: 700;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+            letter-spacing: -0.3px;
+        }
+
+        .markdown-body h1 {
+            font-size: 32px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .markdown-body h2 {
+            font-size: 22px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 36px;
+        }
+
+        .markdown-body h3 {
+            font-size: 18px;
+            margin-top: 24px;
+        }
+
+        .markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body table {
+            margin-bottom: 18px;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            padding-left: 24px;
+        }
+
+        .markdown-body li {
+            margin-bottom: 6px;
+        }
+
+        .markdown-body a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Blocks & Tables */
+        .markdown-body pre {
+            background-color: #05070a;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+        }
+
+        .markdown-body code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #ff7b72;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: inherit;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .markdown-body th, .markdown-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .markdown-body hr {
+            height: 1px;
+            background-color: var(--border-color);
+            border: none;
+            margin: 36px 0;
+        }
+
+        .markdown-body blockquote {
+            border-left: 4px solid var(--text-muted);
+            padding-left: 16px;
+            color: var(--text-muted);
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 16px;
+            }
+            .sidebar-header {
+                margin-bottom: 16px;
+                padding-bottom: 10px;
+            }
+            main {
+                margin-left: 0;
+                padding: 24px;
+            }
+            .content-card {
+                padding: 24px;
+            }
+        }
+
+        /* Mermaid diagram block styling */
+        .mermaid {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="sidebar-header">
+            <h1>Shreyash Kumar</h1>
+            <p>Data & AI Engineer Portfolio</p>
+        </div>
+        <nav>
+            <a href="shreyash_kumar_resume.html" class="nav-item ">📄 Professional Resume</a>
+<a href="technical_walkthrough.html" class="nav-item ">⚙️ Technical Code Walkthrough</a>
+<a href="01_cloud_native_data_platform.html" class="nav-item ">☁️ Cloud Native Platform (Mindsprint)</a>
+<a href="02_enterprise_data_pipelines.html" class="nav-item ">🚀 Enterprise Data Pipelines (TCS/Sainsbury)</a>
+<a href="03_data_quality_governance.html" class="nav-item ">🛡️ Data Quality & Governance</a>
+<a href="04_ai_genai_systems.html" class="nav-item ">🧠 AI & Generative AI Systems</a>
+<a href="interview_prep_banking_ai.html" class="nav-item ">💬 Interview Prep: Banking AI</a>
+<a href="interview_prep_mindsprint.html" class="nav-item ">💬 Interview Prep: Mindsprint</a>
+<a href="interview_prep_tcs.html" class="nav-item active">💬 Interview Prep: TCS/Sainsbury</a>
+<a href="runbook.html" class="nav-item ">📖 Operations Runbook</a>
+<a href="ai_guide.html" class="nav-item ">📘 AI & NLP Concepts Guide</a>
+        </nav>
+    </aside>
+
+    <main>
+        <div class="content-card">
+            <article class="markdown-body">
+                <h1>Interview Prep — TCS: Sainsbury's Retail Data Platform</h1>
+<h2>Client: Sainsbury's (UK's 2nd Largest Grocer) | Aug 2021 – Oct 2024</h2>
+<hr />
+<h2>1. Elevator Pitch (30 seconds)</h2>
+<blockquote>
+<p>"At TCS I built the data platform for Sainsbury's — 1,400 stores, 24 million transactions a week, 18 million Nectar loyalty members. Three big wins: I fixed a store replenishment lag that was causing 25% waste on fresh produce by streaming EPOS data in near-real-time; I resolved a 200:1 data skew on Nectar loyalty joins by pre-aggregating before joining — cut the pipeline from 5 hours to 48 minutes; and I automated supplier settlement reconciliation across 3,000 suppliers from 10 days to 2 days, recovering £340K in missed deductions in the first quarter."</p>
+</blockquote>
+<hr />
+<h2>2. The Problems Worth Talking About</h2>
+<h3>Problem 1 — Fresh Produce Waste (The Perishability Problem)</h3>
+<p><strong>Situation:</strong> Grocery is unique because of shelf life. A laptop sits on a shelf for months. A ready meal has 3 days. Bakery croissants have 8 hours. Store replenishment ran on 6-8 hour stale data. By the time the system knew an item had sold out, the morning rush was over. Overstocking on short-shelf items: 25% waste. Stockouts on promoted items: 12% lost revenue.</p>
+<p><strong>Why batch couldn't be fixed:</strong> The overnight Spark job reads the entire EPOS extract. It takes 40 minutes. Running it every 30 minutes means it never finishes before the next run starts.</p>
+<p><strong>The fix:</strong> Streaming. EPOS tills already publish events to a message bus. Connected that to Pub/Sub → Dataflow. Store managers now see sales velocity updated every 5 minutes. The tricky part was handling grocery-specific data — weighed items use store-generated barcodes (format: 2PPPPPPWWWWWC) that need to be parsed differently from standard EAN-13.</p>
+<p><strong>Result:</strong> Data lag: 6-8 hours → ~5 minutes. Fresh produce waste in pilot stores: 25% → 18%.</p>
+<h3>Problem 2 — Nectar Loyalty Skew (200:1 Power Shoppers)</h3>
+<p><strong>Situation:</strong> 18M Nectar cardholders, but the top 500 "power shoppers" have 1,500+ transactions/month. When you join sales to Nectar events on nectar_card_id, those 500 users create a 200:1 skew. Standard Spark OOMs.</p>
+<p><strong>What I tried first:</strong>
+- AQE skew handling: threshold is 5x median. At 200x, even split partitions are 40x larger than normal — OOM continues.
+- 16GB executor memory: delayed OOM by 20 minutes. Same outcome.</p>
+<p><strong>What worked:</strong> Pre-aggregate Nectar events to customer-day level BEFORE the join. A power shopper with 1,500 transactions becomes ONE row per day. Join ratio goes from 1:200 to 1:1. Broadcast the aggregated Nectar table (~800K rows for a day).</p>
+<h3>Problem 3 — Supplier Settlement (10 Days to Close Month-End)</h3>
+<p><strong>Situation:</strong> Sainsbury's has 3,000+ suppliers. Monthly settlement requires matching purchase orders → delivery confirmations → promotional allowances → markdown claims. Four different systems. Finance team spent 10 days on spreadsheets.</p>
+<p><strong>The hard part:</strong> Short-shipments. Sainsbury's orders 1000 Heinz Beans, Heinz ships 950. Sainsbury's pays for 950, but the promotional allowance was calculated on 1000. The allowance must be pro-rated to 950/1000 = 95%. This pro-rating was being done manually — and finance missed it on ~15% of short-shipped orders.</p>
+<p><strong>Result:</strong> 10 days → 2 days. £340K recovered in Q1 from short-shipment deductions that were being missed.</p>
+<hr />
+<h2>3. Technical Deep-Dives</h2>
+<p><strong>Q: Why Pub/Sub → Dataflow for EPOS instead of Kafka → Spark Streaming?</strong></p>
+<p>A: Sainsbury's was already on GCP. Pub/Sub is managed — zero ops overhead. Kafka requires ZooKeeper, broker sizing, partition management, replication factor tuning. For a grocery retailer that wants to focus on selling food, not managing infrastructure, serverless wins. Dataflow also scales to zero when stores close at night — no idle cost.</p>
+<p><strong>Q: How did you handle the weighed-item barcodes?</strong></p>
+<p>A: Standard products use EAN-13 barcodes (global, unique per SKU). But weighed items (fruit, deli meat, cheese) get store-generated barcodes: <code>2PPPPPPWWWWWC</code> where P is an internal product code and W is weight in grams. I detect these by prefix "2", extract the product code and weight from the barcode itself, and join to a separate weighed-product dimension table instead of the standard SKU master.</p>
+<p><strong>Q: Explain the pre-aggregation approach for the Nectar skew in detail.</strong></p>
+<p>A: Instead of joining 80M raw Nectar events to 160M EPOS transactions (skewed on nectar_card_id), I aggregate both sides to customer-day level first. Nectar: <code>GROUP BY nectar_card_id, event_date → points_earned, points_redeemed, partner_count</code>. Sales: <code>GROUP BY nectar_card_id, sale_date → daily_spend, items_purchased, stores_visited, categories</code>. Now both sides have ~800K rows for a typical day — broadcastable. The 1,500-transaction power shopper is one row. Zero skew.</p>
+<p><strong>Q: What's <code>trigger_rule=ALL_DONE</code> on the delete cluster task?</strong></p>
+<p>A: Airflow default is <code>ALL_SUCCESS</code> — a task only runs if all upstream tasks succeeded. If Spark fails, the cluster delete task would be SKIPPED, leaving a live Dataproc cluster burning money 24/7. <code>ALL_DONE</code> means "run this task regardless of upstream outcome." It's the one task where you explicitly don't care about success/failure upstream — the cluster MUST be cleaned up.</p>
+<p><strong>Q: How did you handle GDPR for Nectar customer data?</strong></p>
+<p>A: Two layers. Column-level masking: customer_name and postcode are masked for general analysts (they see 'MASKED' and 'SW1 ***'). Only the data_stewards security group sees full values. Row-level security: a London analyst querying fact_sales automatically gets filtered to <code>WHERE store_region = 'london'</code>. Both enforced at BigQuery level using row access policies and authorized views.</p>
+<hr />
+<h2>4. Behavioral Questions</h2>
+<p><strong>Q: Tell me about a production incident during a critical period.</strong></p>
+<p>A: Sainsbury's had a major promotion launch on a Saturday morning. The Nectar loyalty pipeline from the night before had failed at 3 AM — the executor handling the power shoppers OOMed. By 7 AM the marketing team couldn't see Nectar point allocations for the promotion. I checked executor logs, identified the skewed partition, added a quick pre-filter on Nectar events to only include today's active cards, and re-ran. Finished by 9:30 AM. That weekend incident is what led me to design the proper pre-aggregation fix over the following two weeks.</p>
+<p><strong>Q: How did you convince stakeholders to invest in streaming?</strong></p>
+<p>A: The 25% waste number on fresh produce did it. I calculated the annual cost: 25% waste × fresh produce revenue × margin impact = roughly £4-5M per year in preventable loss. Streaming pipeline development: 6 weeks, no additional infrastructure cost (Dataflow is serverless). The ROI was obvious. They approved it the same week.</p>
+<hr />
+<h2>5. Numbers to Remember</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Store replenishment data lag</td>
+<td>6-8 hours</td>
+<td>~5 minutes</td>
+</tr>
+<tr>
+<td>Fresh produce waste (pilot)</td>
+<td>25%</td>
+<td>18%</td>
+</tr>
+<tr>
+<td>Nectar loyalty pipeline</td>
+<td>5.2 hours</td>
+<td>48 minutes</td>
+</tr>
+<tr>
+<td>Supplier settlement</td>
+<td>10 days</td>
+<td>2 days</td>
+</tr>
+<tr>
+<td>Short-shipment savings (Q1)</td>
+<td>Untracked</td>
+<td>£340K recovered</td>
+</tr>
+<tr>
+<td>Cluster cost</td>
+<td>£8K/month</td>
+<td>£1.2K/month</td>
+</tr>
+<tr>
+<td>GDPR compliance</td>
+<td>PII accessible to all</td>
+<td>Column + row level security</td>
+</tr>
+</tbody>
+</table>
+            </article>
+        </div>
+    </main>
+
+    <!-- Mermaid.js for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose',
+                themeVariables: {
+                    background: '#0d1117',
+                    primaryColor: '#1f6feb',
+                    primaryTextColor: '#c9d1d9',
+                    lineColor: '#8b949e'
+                }
+            });
+            
+            // Convert code blocks with language-mermaid to div.mermaid
+            document.querySelectorAll('pre code.language-mermaid').forEach(function(el) {
+                let pre = el.parentElement;
+                let div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = el.textContent;
+                pre.parentNode.replaceChild(div, pre);
+            });
+        });
+    </script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

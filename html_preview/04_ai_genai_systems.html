@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 AI & Generative AI Systems — Banking AI Platform Portfolio</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Highlight.js VS2015 Dark Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --sidebar-bg: rgba(22, 27, 34, 0.7);
+            --content-bg: #161b22;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #c9d1d9;
+            --text-bright: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --accent-bg: rgba(56, 139, 253, 0.15);
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Glassmorphic Design */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: flex-col;
+            padding: 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background: var(--accent-bg);
+            color: var(--accent-color);
+            border-color: rgba(56, 139, 253, 0.3);
+            font-weight: 600;
+        }
+
+        /* Main Content Panel */
+        main {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 60px 80px;
+            max-width: 1200px;
+            min-width: 0; /* Prevents overflow issues */
+        }
+
+        .content-card {
+            background: var(--content-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Markdown Styling (Modernized GitHub Dark look) */
+        .markdown-body {
+            font-size: 16px;
+        }
+
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            color: var(--text-bright);
+            font-weight: 700;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+            letter-spacing: -0.3px;
+        }
+
+        .markdown-body h1 {
+            font-size: 32px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .markdown-body h2 {
+            font-size: 22px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 36px;
+        }
+
+        .markdown-body h3 {
+            font-size: 18px;
+            margin-top: 24px;
+        }
+
+        .markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body table {
+            margin-bottom: 18px;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            padding-left: 24px;
+        }
+
+        .markdown-body li {
+            margin-bottom: 6px;
+        }
+
+        .markdown-body a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Blocks & Tables */
+        .markdown-body pre {
+            background-color: #05070a;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+        }
+
+        .markdown-body code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #ff7b72;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: inherit;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .markdown-body th, .markdown-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .markdown-body hr {
+            height: 1px;
+            background-color: var(--border-color);
+            border: none;
+            margin: 36px 0;
+        }
+
+        .markdown-body blockquote {
+            border-left: 4px solid var(--text-muted);
+            padding-left: 16px;
+            color: var(--text-muted);
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 16px;
+            }
+            .sidebar-header {
+                margin-bottom: 16px;
+                padding-bottom: 10px;
+            }
+            main {
+                margin-left: 0;
+                padding: 24px;
+            }
+            .content-card {
+                padding: 24px;
+            }
+        }
+
+        /* Mermaid diagram block styling */
+        .mermaid {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="sidebar-header">
+            <h1>Shreyash Kumar</h1>
+            <p>Data & AI Engineer Portfolio</p>
+        </div>
+        <nav>
+            <a href="shreyash_kumar_resume.html" class="nav-item ">📄 Professional Resume</a>
+<a href="technical_walkthrough.html" class="nav-item ">⚙️ Technical Code Walkthrough</a>
+<a href="01_cloud_native_data_platform.html" class="nav-item ">☁️ Cloud Native Platform (Mindsprint)</a>
+<a href="02_enterprise_data_pipelines.html" class="nav-item ">🚀 Enterprise Data Pipelines (TCS/Sainsbury)</a>
+<a href="03_data_quality_governance.html" class="nav-item ">🛡️ Data Quality & Governance</a>
+<a href="04_ai_genai_systems.html" class="nav-item active">🧠 AI & Generative AI Systems</a>
+<a href="interview_prep_banking_ai.html" class="nav-item ">💬 Interview Prep: Banking AI</a>
+<a href="interview_prep_mindsprint.html" class="nav-item ">💬 Interview Prep: Mindsprint</a>
+<a href="interview_prep_tcs.html" class="nav-item ">💬 Interview Prep: TCS/Sainsbury</a>
+<a href="runbook.html" class="nav-item ">📖 Operations Runbook</a>
+<a href="ai_guide.html" class="nav-item ">📘 AI & NLP Concepts Guide</a>
+        </nav>
+    </aside>
+
+    <main>
+        <div class="content-card">
+            <article class="markdown-body">
+                <h1>AI &amp; Generative AI Systems — Technical Deep Dive</h1>
+<h2>Mindsprint | Bengaluru | Oct 2024 – Present</h2>
+<hr />
+<h2>1. Business Context</h2>
+<p>Enterprise clients had massive datasets in BigQuery but <strong>non-technical stakeholders couldn't access them</strong> without writing SQL. Every data question required a ticket to the data team, taking days. Meanwhile, data scientists needed semantic search across unstructured documents, and analysts needed automated insight generation.</p>
+<p><strong>Goal:</strong> Build AI-powered systems that democratize data access through natural language querying, automate analytical workflows, and enable semantic data discovery — all grounded in production data engineering infrastructure.</p>
+<hr />
+<h2>2. AI/NLP Foundation — How It All Connects</h2>
+<pre><code class="language-mermaid">graph TB
+    subgraph Foundation[&quot;NLP &amp; Embedding Foundation&quot;]
+        TOK[&quot;Tokenization&lt;br/&gt;(BPE / Subword)&quot;]
+        SE[&quot;Static Embeddings&lt;br/&gt;(Word2Vec, 300-dim)&quot;]
+        PE[&quot;Positional Encoding&lt;br/&gt;(Token Position)&quot;]
+        CE[&quot;Contextual Embeddings&lt;br/&gt;(1536+ dimensions)&quot;]
+    end
+
+    subgraph Transformer[&quot;Transformer Architecture&quot;]
+        ENC[&quot;Encoder&lt;br/&gt;(BERT-style, bidirectional)&quot;]
+        DEC[&quot;Decoder&lt;br/&gt;(GPT-style, masked self-attention)&quot;]
+        ATT[&quot;Self-Attention Mechanism&lt;br/&gt;(Context from all tokens)&quot;]
+        LMH[&quot;LM Head&lt;br/&gt;(Next token prediction)&quot;]
+    end
+
+    subgraph Applied[&quot;Applied AI Systems Built&quot;]
+        RAG[&quot;RAG Pipeline&lt;br/&gt;(Retrieval-Augmented Generation)&quot;]
+        VS[&quot;Vector Store&lt;br/&gt;(Semantic Search)&quot;]
+        NLQ[&quot;Natural Language&lt;br/&gt;Query Engine&quot;]
+        AGENT[&quot;Agentic AI&lt;br/&gt;Workflows&quot;]
+    end
+
+    TOK --&gt; SE
+    SE --&gt; PE
+    PE --&gt; ATT
+    ATT --&gt; CE
+    CE --&gt; ENC
+    CE --&gt; DEC
+    DEC --&gt; LMH
+
+    ENC --&gt; VS
+    VS --&gt; RAG
+    RAG --&gt; NLQ
+    RAG --&gt; AGENT
+
+    style Foundation fill:#1a1a2e,stroke:#e94560,color:#fff
+    style Transformer fill:#16213e,stroke:#533483,color:#fff
+    style Applied fill:#0f3460,stroke:#e94560,color:#fff
+</code></pre>
+<hr />
+<h2>3. Embeddings — Converting Text to Numbers</h2>
+<h3>3.1 Why Embeddings Matter</h3>
+<p>Machines cannot understand text. The entire AI pipeline starts with converting human language into <strong>numerical vectors</strong> that preserve semantic meaning. Without embeddings, no NLP, no LLMs, no RAG.</p>
+<h3>3.2 Static Embeddings (Word2Vec)</h3>
+<p><strong>What:</strong> Each word gets a fixed 300-dimensional vector based on its meaning across 300 features (has_tail, weight, color, etc.). Trained using CBOW (Continuous Bag of Words) or Skip-gram architecture on large text corpora like Wikipedia.</p>
+<p><strong>How similarity works — Cosine Similarity:</strong></p>
+<pre><code>distance = 1 - cos(θ)
+
+Example:
+- cat vector: [0.8, 0.1, 0.3, ..., 1.0]  (300 dims)
+- dog vector: [0.9, 0.2, 0.5, ..., 0.8]  (300 dims)
+- Angle between them: ~45°
+- Distance: 1 - cos(45°) = 1 - 0.707 = 0.29 → CLOSE (similar)
+
+- house vector: [0.1, 0.9, 0.2, ..., 0.1]
+- Angle cat↔house: ~90°
+- Distance: 1 - cos(90°) = 1 - 0 = 1.0 → FAR (dissimilar)
+</code></pre>
+<p><strong>Code — Word2Vec in Action:</strong></p>
+<pre><code class="language-python">import gensim.downloader as api
+
+# Load pre-trained Word2Vec model (1.6GB, 300 dimensions)
+model = api.load(&quot;word2vec-google-news-300&quot;)
+
+# Get embedding for &quot;cat&quot; → 300-dimensional vector
+cat_vector = model[&quot;cat&quot;]
+print(cat_vector.shape)  # (300,)
+
+# Find similar words using cosine similarity
+model.most_similar(&quot;dog&quot;)
+# [('dogs', 0.87), ('puppy', 0.85), ('pitbull', 0.82), ...]
+</code></pre>
+<p><strong>Limitation:</strong> Static embeddings give the SAME vector for a word regardless of context.
+- "fan has three blades" → fan = ceiling fan
+- "I am your fan" → fan = admirer
+- Word2Vec gives SAME embedding for both → <strong>WRONG</strong></p>
+<h3>3.3 Contextual Embeddings (Transformer-based)</h3>
+<p><strong>What:</strong> Each word gets a DIFFERENT vector depending on the surrounding context. Achieved through <strong>self-attention mechanism</strong> in transformers. Modern models use 1536+ dimensions (vs Word2Vec's 300).</p>
+<p><strong>Why this matters:</strong></p>
+<pre><code>&quot;cats love dogs&quot; → cats embedding captures: cats are the SUBJECT doing the loving
+&quot;dogs love cats&quot; → cats embedding captures: cats are the OBJECT being loved
+
+Same word &quot;cats&quot;, DIFFERENT embeddings because POSITION and CONTEXT changed.
+</code></pre>
+<p><strong>How it's achieved:</strong> The transformer block converts static embeddings into contextual embeddings using self-attention — each token attends to all other tokens to understand relationships.</p>
+<hr />
+<h2>4. Transformer Architecture — The Backbone of All Modern AI</h2>
+<h3>4.1 How Transformers Work (Step by Step)</h3>
+<pre><code>Input: &quot;I want to eat chocolate&quot;
+                    ↓
+┌─────────────────────────────────────────────┐
+│              TRANSFORMER                     │
+│                                              │
+│  Step 1: TOKENIZER                           │
+│  ├─ Tokenization: [&quot;I&quot;, &quot;want&quot;, &quot;to&quot;,       │
+│  │                  &quot;eat&quot;, &quot;chocolate&quot;]       │
+│  ├─ Token IDs:     [40, 1100, 1200, 45, 768]│
+│  ├─ Static Embeddings: 1536-dim per token    │
+│  └─ Position Encoding: [0, 1, 2, 3, 4]      │
+│                    ↓                         │
+│  Step 2: TRANSFORMER BLOCK STACK             │
+│  ├─ Masked Self-Attention                    │
+│  ├─ Each token attends to PREVIOUS tokens    │
+│  ├─ Static → Contextual embeddings           │
+│  └─ &quot;chocolate&quot; now has context of           │
+│     &quot;I want to eat&quot;                          │
+│                    ↓                         │
+│  Step 3: LM HEAD                             │
+│  ├─ Takes LAST token's contextual embedding  │
+│  ├─ (because it has context of ALL previous) │
+│  └─ Predicts NEXT token → &quot;Good&quot;             │
+│                                              │
+└─────────────────────────────────────────────┘
+                    ↓
+Output: &quot;Good&quot; (ONE token)
+
+Then: &quot;I want to eat chocolate Good&quot; → Transformer → &quot;choice&quot;
+Then: &quot;I want to eat chocolate Good choice&quot; → Transformer → &quot;!&quot;
+... token by token until done.
+</code></pre>
+<h3>4.2 Self-Attention — The Core Innovation</h3>
+<p><strong>Masked Self-Attention (used in GPT/ChatGPT):</strong>
+- Each token can ONLY attend to previous tokens (not future ones)
+- "eat" attends to → "I", "want", "to" (NOT "chocolate")
+- "chocolate" attends to → "I", "want", "to", "eat" (has FULL context)
+- That's why the LAST token goes to LM Head — it has the most context</p>
+<p><strong>Bidirectional Self-Attention (used in BERT):</strong>
+- Each token attends to ALL tokens (past AND future)
+- Used for understanding/encoding tasks, not generation</p>
+<h3>4.3 Encoder vs Decoder Models</h3>
+<table>
+<thead>
+<tr>
+<th>Model Type</th>
+<th>Architecture</th>
+<th>Self-Attention</th>
+<th>Use Case</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Encoder-only</strong></td>
+<td>Encoder</td>
+<td>Bidirectional</td>
+<td>Understanding, classification, embeddings</td>
+<td>BERT</td>
+</tr>
+<tr>
+<td><strong>Decoder-only</strong></td>
+<td>Decoder</td>
+<td>Masked (left-to-right)</td>
+<td>Text generation</td>
+<td>GPT-3, GPT-4, ChatGPT</td>
+</tr>
+<tr>
+<td><strong>Encoder-Decoder</strong></td>
+<td>Both</td>
+<td>Both</td>
+<td>Translation, summarization</td>
+<td>T5, BART</td>
+</tr>
+</tbody>
+</table>
+<h3>4.4 Tokenization — Model-Dependent</h3>
+<pre><code>Same input, different models, different tokens:
+
+GPT-4:  &quot;10kilometers&quot; → [&quot;10&quot;, &quot;k&quot;, &quot;ms&quot;]     (3 tokens)
+DaVinci: &quot;10kilometers&quot; → [&quot;10&quot;, &quot;kms&quot;]          (2 tokens)
+
+Key insight: Tokens are MODEL-SPECIFIC. Each model has its own
+vocabulary and tokenization strategy (BPE, WordPiece, etc.)
+Token count affects cost (APIs charge per token) and context window.
+</code></pre>
+<hr />
+<h2>5. RAG Pipeline — What We Built</h2>
+<h3>5.1 Why RAG (Not Just LLM)</h3>
+<p>LLMs have a knowledge cutoff and don't know your private enterprise data. RAG solves this by <strong>retrieving</strong> relevant context from your data, then <strong>augmenting</strong> the LLM prompt with that context before <strong>generating</strong> a response.</p>
+<pre><code class="language-mermaid">graph LR
+    Q[&quot;User Question:&lt;br/&gt;'Top 5 customers&lt;br/&gt;by revenue?'&quot;] --&gt; EMB[&quot;Embedding Model&lt;br/&gt;(Vertex AI text-embedding-004)&lt;br/&gt;Convert question → 1536-dim vector&quot;]
+    EMB --&gt; VS[&quot;Vector Store&lt;br/&gt;(Semantic Search)&lt;br/&gt;Find similar schema/&lt;br/&gt;metadata embeddings&quot;]
+    VS --&gt; CTX[&quot;Retrieved Context:&lt;br/&gt;- fact_events table schema&lt;br/&gt;- dim_customer columns&lt;br/&gt;- Sample SQL queries&quot;]
+    CTX --&gt; LLM[&quot;LLM (Gemini 1.5 Pro)&lt;br/&gt;Generate SQL using&lt;br/&gt;retrieved context&quot;]
+    LLM --&gt; SQL[&quot;Generated SQL:&lt;br/&gt;SELECT customer_id,&lt;br/&gt;SUM(revenue)...&quot;]
+    SQL --&gt; BQ[&quot;BigQuery&lt;br/&gt;Execute query&quot;]
+    BQ --&gt; ANS[&quot;LLM Summarizes:&lt;br/&gt;'Top 5 customers are:&lt;br/&gt;1. Acme Corp $2.3M...'&quot;]
+    ANS --&gt; USER[&quot;Business User&lt;br/&gt;Gets answer in&lt;br/&gt;plain English&quot;]
+
+    style Q fill:#e94560,stroke:#fff,color:#fff
+    style EMB fill:#533483,stroke:#fff,color:#fff
+    style VS fill:#0f3460,stroke:#fff,color:#fff
+    style LLM fill:#e94560,stroke:#fff,color:#fff
+    style BQ fill:#16213e,stroke:#fff,color:#fff
+    style USER fill:#1a1a2e,stroke:#e94560,color:#fff
+</code></pre>
+<h3>5.2 Vector Store — Semantic Search Over Schema Metadata</h3>
+<pre><code class="language-python">from vertexai.language_models import TextEmbeddingModel
+import numpy as np
+
+class SchemaVectorStore:
+    &quot;&quot;&quot;Store table/column descriptions as embeddings for semantic retrieval.
+
+    Why vector search (not keyword search)?
+    - User asks &quot;revenue by region&quot; → keyword search won't match 
+      column named &quot;total_amount&quot; in table &quot;fact_transactions&quot;
+    - Vector search matches by MEANING: revenue ≈ total_amount (cosine similarity)
+    &quot;&quot;&quot;
+
+    def __init__(self):
+        self.model = TextEmbeddingModel.from_pretrained(&quot;text-embedding-004&quot;)
+        self.embeddings = []  # list of (embedding_vector, metadata)
+
+    def index_schema(self, tables: dict):
+        &quot;&quot;&quot;Convert every table/column description into a 1536-dim vector.&quot;&quot;&quot;
+        for table_name, info in tables.items():
+            # Embed table description
+            text = f&quot;Table: {table_name}. {info['description']}. &quot;
+            text += &quot;Columns: &quot; + &quot;, &quot;.join(
+                f&quot;{col} ({desc})&quot; for col, desc in info['columns'].items()
+            )
+            embedding = self.model.get_embeddings([text])[0].values
+            self.embeddings.append((embedding, {&quot;table&quot;: table_name, &quot;info&quot;: info}))
+
+    def search(self, query: str, top_k: int = 3):
+        &quot;&quot;&quot;Find most relevant tables for a natural language question.
+        Uses cosine similarity — same math as Word2Vec but in 1536 dims.&quot;&quot;&quot;
+        query_emb = self.model.get_embeddings([query])[0].values
+
+        scores = []
+        for emb, metadata in self.embeddings:
+            # Cosine similarity: 1 - (angle between vectors)
+            similarity = np.dot(query_emb, emb) / (
+                np.linalg.norm(query_emb) * np.linalg.norm(emb)
+            )
+            scores.append((similarity, metadata))
+
+        # Return top-k most similar schemas
+        scores.sort(key=lambda x: x[0], reverse=True)
+        return [meta for _, meta in scores[:top_k]]
+</code></pre>
+<h3>5.3 Full RAG Query Engine</h3>
+<pre><code class="language-python">from vertexai.generative_models import GenerativeModel
+from google.cloud import bigquery
+
+class RAGQueryEngine:
+    &quot;&quot;&quot;Natural language → SQL → Answer pipeline.
+
+    Architecture:
+    1. User question → embed with text-embedding-004 (1536 dims)
+    2. Semantic search against schema vector store (cosine similarity)
+    3. Retrieved schemas + question → Gemini generates SQL
+    4. Execute SQL on BigQuery
+    5. Results + question → Gemini generates natural language answer
+    &quot;&quot;&quot;
+
+    def __init__(self, project_id: str):
+        self.bq = bigquery.Client(project=project_id)
+        self.llm = GenerativeModel(&quot;gemini-1.5-pro&quot;)
+        self.vector_store = SchemaVectorStore()
+        self._index_enterprise_schemas()
+
+    def _index_enterprise_schemas(self):
+        &quot;&quot;&quot;Pre-index all BigQuery table schemas into vector store.&quot;&quot;&quot;
+        schemas = {
+            &quot;analytics.fact_events&quot;: {
+                &quot;description&quot;: &quot;Transaction events with revenue and quantities&quot;,
+                &quot;columns&quot;: {
+                    &quot;customer_id&quot;: &quot;Unique customer identifier&quot;,
+                    &quot;revenue&quot;: &quot;Transaction revenue in INR&quot;,
+                    &quot;event_type&quot;: &quot;purchase, refund, or signup&quot;,
+                    &quot;created_date&quot;: &quot;Event date (partition key)&quot;,
+                    &quot;customer_segment&quot;: &quot;enterprise, mid_market, smb&quot;,
+                }
+            },
+            &quot;analytics.dim_customer&quot;: {
+                &quot;description&quot;: &quot;Customer dimension with demographics&quot;,
+                &quot;columns&quot;: {
+                    &quot;customer_id&quot;: &quot;Join key to fact tables&quot;,
+                    &quot;customer_segment&quot;: &quot;Business size category&quot;,
+                    &quot;region&quot;: &quot;Geographic region&quot;,
+                    &quot;lifetime_value&quot;: &quot;Total historical revenue&quot;,
+                }
+            }
+        }
+        self.vector_store.index_schema(schemas)
+
+    def query(self, question: str) -&gt; dict:
+        # Step 1: Retrieve relevant schemas via semantic search
+        relevant_schemas = self.vector_store.search(question, top_k=3)
+
+        # Step 2: Generate SQL with LLM + retrieved context
+        prompt = f&quot;&quot;&quot;You are a BigQuery SQL expert. Generate SQL to answer the question.
+
+AVAILABLE SCHEMAS (retrieved via semantic search):
+{relevant_schemas}
+
+QUESTION: {question}
+
+RULES:
+- Use ONLY listed tables/columns
+- Always include partition filter (WHERE created_date ...)
+- Standard BigQuery SQL syntax
+- Return ONLY SQL, no explanation&quot;&quot;&quot;
+
+        sql = self.llm.generate_content(prompt).text.strip().strip('```sql').strip('```')
+
+        # Step 3: Execute on BigQuery
+        results = [dict(row) for row in self.bq.query(sql).result()]
+
+        # Step 4: Summarize in natural language
+        summary = self.llm.generate_content(
+            f'Question: &quot;{question}&quot;\nSQL Results: {results[:20]}\n'
+            f'Give a clear, concise answer with key numbers.'
+        ).text
+
+        return {&quot;question&quot;: question, &quot;sql&quot;: sql, &quot;answer&quot;: summary}
+
+# Usage
+engine = RAGQueryEngine(&quot;mindsprint-prod&quot;)
+result = engine.query(&quot;What were top 5 customers by revenue last quarter?&quot;)
+# Answer: &quot;Top 5 customers in Q4: 1) Acme Corp (₹23L), 2) TechNova (₹18L)...&quot;
+</code></pre>
+<hr />
+<h2>6. Agentic AI — Autonomous Data Analysis</h2>
+<p><strong>Why agents (not just RAG)?</strong> RAG answers ONE question. An agent takes a complex OBJECTIVE and breaks it into MULTIPLE steps autonomously — querying data, interpreting results, deciding what to investigate next.</p>
+<pre><code class="language-python">class DataAnalysisAgent:
+    &quot;&quot;&quot;Multi-step autonomous analysis agent.
+
+    How it differs from RAG:
+    - RAG: Question → Retrieve → Generate → Answer (1 step)
+    - Agent: Objective → Plan → Execute Step 1 → Interpret → 
+             Decide next step → Execute Step 2 → ... → Final Summary
+
+    Uses the same transformer/LLM foundation:
+    - Tokenization → embeddings → self-attention → token generation
+    - But wrapped in an autonomous loop with tool access
+    &quot;&quot;&quot;
+
+    def __init__(self, project_id: str):
+        self.bq = bigquery.Client(project=project_id)
+        self.llm = GenerativeModel(&quot;gemini-1.5-pro&quot;)
+        self.tools = {
+            &quot;run_sql&quot;: self._execute_query,
+            &quot;get_schema&quot;: self._get_table_schema,
+            &quot;alert&quot;: self._send_alert,
+        }
+
+    def run(self, objective: str) -&gt; dict:
+        &quot;&quot;&quot;Run autonomous multi-step analysis.&quot;&quot;&quot;
+        history = []
+
+        for step in range(10):  # Max 10 steps
+            # LLM decides what to do next based on history
+            # Under the hood: tokenize prompt → transformer blocks →
+            # masked self-attention → LM head → next action token by token
+            prompt = f&quot;&quot;&quot;Objective: {objective}
+Steps taken so far: {history}
+Available tools: {list(self.tools.keys())}
+
+What's your next action? Return JSON:
+{{&quot;tool&quot;: &quot;tool_name&quot;, &quot;params&quot;: {{}}, &quot;reasoning&quot;: &quot;why&quot;}}
+Or if done: {{&quot;tool&quot;: &quot;DONE&quot;, &quot;summary&quot;: &quot;findings&quot;}}&quot;&quot;&quot;
+
+            action = json.loads(self.llm.generate_content(prompt).text)
+
+            if action[&quot;tool&quot;] == &quot;DONE&quot;:
+                return {&quot;steps&quot;: history, &quot;summary&quot;: action[&quot;summary&quot;]}
+
+            # Execute tool and record result
+            result = self.tools[action[&quot;tool&quot;]](**action[&quot;params&quot;])
+            history.append({
+                &quot;step&quot;: step + 1,
+                &quot;tool&quot;: action[&quot;tool&quot;],
+                &quot;reasoning&quot;: action[&quot;reasoning&quot;],
+                &quot;result&quot;: str(result)[:500]
+            })
+
+        return {&quot;steps&quot;: history, &quot;summary&quot;: &quot;Max steps reached&quot;}
+
+# Usage: Agent autonomously investigates revenue drop
+agent = DataAnalysisAgent(&quot;mindsprint-prod&quot;)
+result = agent.run(&quot;Why did revenue drop 15% yesterday vs 7-day avg?&quot;)
+# Agent autonomously:
+# Step 1: Queries daily revenue trend
+# Step 2: Identifies enterprise segment dropped 40%
+# Step 3: Drills into enterprise → finds 2 large accounts churned
+# Step 4: Checks if data quality issue or real → confirms real
+# Step 5: Generates summary with root cause + recommendation
+</code></pre>
+<hr />
+<h2>7. Prompting Techniques Used</h2>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>What It Does</th>
+<th>Where We Used It</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Zero-shot</strong></td>
+<td>No examples, just instruction</td>
+<td>Simple SQL generation</td>
+</tr>
+<tr>
+<td><strong>Few-shot</strong></td>
+<td>Include 2-3 examples in prompt</td>
+<td>Complex join queries</td>
+</tr>
+<tr>
+<td><strong>Chain-of-thought</strong></td>
+<td>"Think step by step"</td>
+<td>Multi-table analysis</td>
+</tr>
+<tr>
+<td><strong>ReAct</strong></td>
+<td>Reasoning + Acting loop</td>
+<td>Agentic AI workflows</td>
+</tr>
+<tr>
+<td><strong>System prompts</strong></td>
+<td>Set role and constraints</td>
+<td>"You are a BigQuery SQL expert"</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>8. Technical Decisions — Why These Choices</h2>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Choice</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Embedding model</td>
+<td>Vertex AI text-embedding-004 (1536 dims)</td>
+<td>Native GCP, higher dims than Word2Vec (300) = richer semantic meaning</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>Gemini 1.5 Pro</td>
+<td>Native GCP integration, 1M token context window, enterprise-grade</td>
+</tr>
+<tr>
+<td>Vector search</td>
+<td>Custom cosine similarity</td>
+<td>Lightweight, no external vector DB dependency for small schema catalog</td>
+</tr>
+<tr>
+<td>RAG over fine-tuning</td>
+<td>RAG pipeline</td>
+<td>Schema changes frequently; RAG adapts without retraining</td>
+</tr>
+<tr>
+<td>Agent framework</td>
+<td>Custom Python</td>
+<td>Full control, no LangChain overhead, tight Airflow integration</td>
+</tr>
+<tr>
+<td>Self-attention type</td>
+<td>Masked (decoder-only)</td>
+<td>Generation tasks need left-to-right prediction, not bidirectional</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>9. Results &amp; Impact</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data access for non-tech users</td>
+<td>Zero (SQL only)</td>
+<td>Self-serve via natural language</td>
+</tr>
+<tr>
+<td>Time to answer data questions</td>
+<td>Days (ticket-based)</td>
+<td>Seconds (real-time NL query)</td>
+</tr>
+<tr>
+<td>Analyst investigation time</td>
+<td>Hours of manual SQL</td>
+<td>Minutes (agentic automation)</td>
+</tr>
+<tr>
+<td>Data team ticket volume</td>
+<td>High</td>
+<td>Reduced significantly</td>
+</tr>
+<tr>
+<td>Semantic search accuracy</td>
+<td>N/A</td>
+<td>High (1536-dim contextual embeddings)</td>
+</tr>
+</tbody>
+</table>
+            </article>
+        </div>
+    </main>
+
+    <!-- Mermaid.js for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose',
+                themeVariables: {
+                    background: '#0d1117',
+                    primaryColor: '#1f6feb',
+                    primaryTextColor: '#c9d1d9',
+                    lineColor: '#8b949e'
+                }
+            });
+            
+            // Convert code blocks with language-mermaid to div.mermaid
+            document.querySelectorAll('pre code.language-mermaid').forEach(function(el) {
+                let pre = el.parentElement;
+                let div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = el.textContent;
+                pre.parentNode.replaceChild(div, pre);
+            });
+        });
+    </script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

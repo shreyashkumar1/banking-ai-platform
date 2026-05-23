@@ -11,6 +11,7 @@ A real ReAct agent loop:
 """
 
 from google.cloud import bigquery
+from google.auth.exceptions import DefaultCredentialsError
 from dataclasses import dataclass, field
 from typing import Optional, Callable
 import json
@@ -67,6 +68,7 @@ class ToolRegistry:
     def __init__(self, bq_client: bigquery.Client, project_id: str):
         self.bq = bq_client
         self.project_id = project_id
+        self.mock_mode = bq_client is None
         self._tools: dict[str, Callable] = {}
         self._call_counts: dict[str, int] = {}
 
@@ -105,6 +107,22 @@ class ToolRegistry:
         if not upper.startswith(("SELECT", "WITH")):
             return "ERROR: Agent can only run SELECT queries"
 
+        if self.mock_mode:
+            logger.info(f"[MOCK BQ] Agent executing SQL: {query[:100]}...")
+            if "fact_fraud_alerts" in query.lower():
+                if "count" in query.lower():
+                    return json.dumps([{"risk_level": "HIGH", "cnt": 47, "avg_score": 0.89}])
+                return json.dumps([
+                    {"customer_id": "cust_8271", "alert_count": 8, "max_score": 0.94, "risk_category": "HIGH"},
+                    {"customer_id": "cust_1982", "alert_count": 5, "max_score": 0.91, "risk_category": "MEDIUM"},
+                ])
+            elif "fact_transactions" in query.lower():
+                return json.dumps([
+                    {"transaction_type": "UPI", "channel": "MOBILE", "cnt": 18, "total_inr": 12500},
+                    {"transaction_type": "TRANSFER", "channel": "WEB", "cnt": 2, "total_inr": 45000},
+                ])
+            return json.dumps([{"status": "OK", "details": "Mock SQL results (Mock Mode)"}])
+
         try:
             job = self.bq.query(query)
             rows = [dict(row) for row in job.result()][:max_rows]
@@ -116,6 +134,14 @@ class ToolRegistry:
 
     def _get_schema(self, table: str) -> str:
         """Return column names and types for a BigQuery table."""
+        if self.mock_mode:
+            from src.ai.vector_store import BANKING_SCHEMAS
+            # Find the schema
+            for name, info in BANKING_SCHEMAS.items():
+                if table in name:
+                    return json.dumps({c["name"]: {"type": c["type"], "mode": "NULLABLE"} for c in info["columns"]}, indent=2)
+            return json.dumps({"error": f"Table {table} not found in mock schemas"}, indent=2)
+
         try:
             t = self.bq.get_table(f"{self.project_id}.{table}")
             schema = {f.name: {"type": f.field_type, "mode": f.mode} for f in t.schema}
@@ -255,7 +281,14 @@ class BankingInvestigationAgent:
         """
         self.project_id = project_id
         self.max_steps = max_steps
-        self.bq = bigquery.Client(project=project_id)
+        try:
+            self.bq = bigquery.Client(project=project_id)
+            self.mock_mode = False
+        except (DefaultCredentialsError, Exception) as e:
+            logger.warning(f"Could not initialize BigQuery client: {e}. Running in MOCK mode.")
+            self.bq = None
+            self.mock_mode = True
+
         self.tools = ToolRegistry(self.bq, project_id)
         self.loop_detector = LoopDetector()
         self.parser = ActionParser()

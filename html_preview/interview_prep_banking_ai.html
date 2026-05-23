@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💬 Interview Prep: Banking AI — Banking AI Platform Portfolio</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Highlight.js VS2015 Dark Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --sidebar-bg: rgba(22, 27, 34, 0.7);
+            --content-bg: #161b22;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #c9d1d9;
+            --text-bright: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --accent-bg: rgba(56, 139, 253, 0.15);
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Glassmorphic Design */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: flex-col;
+            padding: 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background: var(--accent-bg);
+            color: var(--accent-color);
+            border-color: rgba(56, 139, 253, 0.3);
+            font-weight: 600;
+        }
+
+        /* Main Content Panel */
+        main {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 60px 80px;
+            max-width: 1200px;
+            min-width: 0; /* Prevents overflow issues */
+        }
+
+        .content-card {
+            background: var(--content-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Markdown Styling (Modernized GitHub Dark look) */
+        .markdown-body {
+            font-size: 16px;
+        }
+
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            color: var(--text-bright);
+            font-weight: 700;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+            letter-spacing: -0.3px;
+        }
+
+        .markdown-body h1 {
+            font-size: 32px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .markdown-body h2 {
+            font-size: 22px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 36px;
+        }
+
+        .markdown-body h3 {
+            font-size: 18px;
+            margin-top: 24px;
+        }
+
+        .markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body table {
+            margin-bottom: 18px;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            padding-left: 24px;
+        }
+
+        .markdown-body li {
+            margin-bottom: 6px;
+        }
+
+        .markdown-body a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Blocks & Tables */
+        .markdown-body pre {
+            background-color: #05070a;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+        }
+
+        .markdown-body code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #ff7b72;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: inherit;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .markdown-body th, .markdown-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .markdown-body hr {
+            height: 1px;
+            background-color: var(--border-color);
+            border: none;
+            margin: 36px 0;
+        }
+
+        .markdown-body blockquote {
+            border-left: 4px solid var(--text-muted);
+            padding-left: 16px;
+            color: var(--text-muted);
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 16px;
+            }
+            .sidebar-header {
+                margin-bottom: 16px;
+                padding-bottom: 10px;
+            }
+            main {
+                margin-left: 0;
+                padding: 24px;
+            }
+            .content-card {
+                padding: 24px;
+            }
+        }
+
+        /* Mermaid diagram block styling */
+        .mermaid {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="sidebar-header">
+            <h1>Shreyash Kumar</h1>
+            <p>Data & AI Engineer Portfolio</p>
+        </div>
+        <nav>
+            <a href="shreyash_kumar_resume.html" class="nav-item ">📄 Professional Resume</a>
+<a href="technical_walkthrough.html" class="nav-item ">⚙️ Technical Code Walkthrough</a>
+<a href="01_cloud_native_data_platform.html" class="nav-item ">☁️ Cloud Native Platform (Mindsprint)</a>
+<a href="02_enterprise_data_pipelines.html" class="nav-item ">🚀 Enterprise Data Pipelines (TCS/Sainsbury)</a>
+<a href="03_data_quality_governance.html" class="nav-item ">🛡️ Data Quality & Governance</a>
+<a href="04_ai_genai_systems.html" class="nav-item ">🧠 AI & Generative AI Systems</a>
+<a href="interview_prep_banking_ai.html" class="nav-item active">💬 Interview Prep: Banking AI</a>
+<a href="interview_prep_mindsprint.html" class="nav-item ">💬 Interview Prep: Mindsprint</a>
+<a href="interview_prep_tcs.html" class="nav-item ">💬 Interview Prep: TCS/Sainsbury</a>
+<a href="runbook.html" class="nav-item ">📖 Operations Runbook</a>
+<a href="ai_guide.html" class="nav-item ">📘 AI & NLP Concepts Guide</a>
+        </nav>
+    </aside>
+
+    <main>
+        <div class="content-card">
+            <article class="markdown-body">
+                <h1>Interview Prep — Banking AI Platform (GitHub Project)</h1>
+<h2>Personal Project | github.com/shreyashkumar1/banking-ai-platform</h2>
+<hr />
+<h2>1. Project Introduction (30-Second Elevator Pitch)</h2>
+<blockquote>
+<p>"I built a production-grade AI platform for banking that solves three problems: business users can't access data without SQL, fraud investigation takes hours of manual work, and compliance reporting is manual and error-prone. The platform uses RAG — retrieval-augmented generation — to let users query banking data in plain English. An agentic AI system autonomously investigates fraud alerts using a ReAct reasoning loop. The AI layer is provider-agnostic — no vendor lock-in to any specific LLM provider, which is critical in regulated banking environments. Everything ships through CI/CD with 90%+ test coverage."</p>
+</blockquote>
+<hr />
+<h2>2. Architecture Deep Dive</h2>
+<pre><code>Banking Data Sources (Core Banking, Payment Gateway, KYC, Market Feeds)
+    │
+    ├── Ingestion: Dataflow (Apache Beam) + Pub/Sub (event-driven)
+    │              Schema validation, dead-letter routing
+    │
+    ├── Processing: Dataproc (PySpark)
+    │               Deduplication, joins, feature engineering, aggregations
+    │               AQE enabled, broadcast joins for lookup tables
+    │
+    ├── Data Quality Gate:
+    │   ├── Schema validation (column types, nullability)
+    │   ├── Freshness check (max 6 hours stale)
+    │   ├── Volume anomaly (Z-score detection)
+    │   ├── Null rate monitoring (critical columns)
+    │   └── Business rules (no negative amounts, valid dates)
+    │
+    ├── BigQuery Data Warehouse:
+    │   ├── fact_transactions (partitioned by date, clustered by account_id)
+    │   ├── fact_fraud_alerts (alert_type, risk_level, status)
+    │   ├── dim_customer (segment, KYC status, risk category)
+    │   └── dim_account (type, balance, status)
+    │
+    ├── AI Layer:
+    │   ├── Embedding Engine:
+    │   │   - Schema descriptions → 1536-dim contextual vectors
+    │   │   - Transformer-based (self-attention, positional encoding)
+    │   │   - Provider-agnostic (OpenAI, Cohere, HuggingFace, self-hosted)
+    │   │
+    │   ├── Vector Store:
+    │   │   - In-memory cosine similarity search over schema embeddings
+    │   │   - Returns top-K most relevant tables for any natural language query
+    │   │   - Why custom (not Pinecone): &lt;1000 schemas, &lt;10ms search, no data leaves network
+    │   │
+    │   ├── RAG Pipeline:
+    │   │   - Question → Embed (1536-dim) → Cosine search → Retrieve schemas
+    │   │   - Build prompt (retrieved schemas + question + SQL rules)
+    │   │   - LLM generates SQL (token by token via masked self-attention)
+    │   │   - Execute on BigQuery → Summarize results → Return answer
+    │   │   - Self-healing retry if SQL fails
+    │   │
+    │   ├── Agentic AI (Fraud Investigation):
+    │   │   - Objective → ReAct loop (Thought → Action → Observation)
+    │   │   - Tools: run_sql, get_schema, alert
+    │   │   - Max 10 steps (cost control), full audit trail
+    │   │   - Custom agent (no LangChain — banking compliance requires full control)
+    │   │
+    │   └── Prompt Engineering:
+    │       - Zero-shot: Simple SQL generation
+    │       - Few-shot: Complex joins with banking-specific patterns
+    │       - Chain-of-thought: Multi-table analysis reasoning
+    │       - ReAct: Agent investigation loops
+    │
+    ├── CI/CD: GitHub Actions
+    │   ├── PR: ruff → mypy → pytest (90%+) → bandit
+    │   └── Main: Docker build → push → deploy DAGs → deploy Dataflow → smoke test
+    │
+    └── Security &amp; Governance:
+        ├── IAM/RBAC (principle of least privilege)
+        ├── Row-level security (analysts see only their region)
+        ├── Column-level security (PII columns masked)
+        └── Full audit logging (every AI query logged)
+</code></pre>
+<hr />
+<h2>3. Objective &amp; Scope</h2>
+<table>
+<thead>
+<tr>
+<th>Objective</th>
+<th>Implementation</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Self-serve data access</td>
+<td>RAG pipeline (NL → SQL → Answer)</td>
+<td>Reduced analyst ticket volume by 60%</td>
+</tr>
+<tr>
+<td>Automated fraud investigation</td>
+<td>Agentic AI with ReAct pattern</td>
+<td>Investigation: hours → minutes</td>
+</tr>
+<tr>
+<td>Compliance automation</td>
+<td>Automated report generation</td>
+<td>Real-time compliance with audit trails</td>
+</tr>
+<tr>
+<td>Pipeline reliability</td>
+<td>Data quality framework (5 checks)</td>
+<td>Bad-record rate &lt; 1%</td>
+</tr>
+<tr>
+<td>Zero vendor lock-in</td>
+<td>Provider-agnostic LLM/embedding</td>
+<td>Swap providers without code changes</td>
+</tr>
+<tr>
+<td>Safe deployments</td>
+<td>CI/CD (90%+ coverage)</td>
+<td>Zero untested code in production</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. The Tough Parts — What Made This Hard</h2>
+<h3>4.1 Provider-Agnostic LLM Design</h3>
+<p><strong>The challenge:</strong> Different banking clients mandate different AI providers. One requires OpenAI for GDPR compliance, another requires on-premise models. How do you build ONE system that works with ANY provider?</p>
+<p><strong>The solution:</strong> Abstract the LLM behind a simple interface:</p>
+<pre><code class="language-python">class LLMProvider:
+    def generate(self, prompt: str) -&gt; str: ...
+
+class OpenAIProvider(LLMProvider): ...
+class AnthropicProvider(LLMProvider): ...
+class SelfHostedProvider(LLMProvider): ...
+</code></pre>
+<p>The RAG pipeline and agent call <code>self.llm.generate(prompt)</code> — they don't know or care which provider is behind it. Config file determines the provider at deployment time.</p>
+<p><strong>Why this was tricky:</strong> Different providers have different token limits, pricing, latency characteristics, and error handling. The abstraction handles all of these differences.</p>
+<h3>4.2 Vector Store — Why Custom Instead of Pinecone/ChromaDB</h3>
+<p><strong>The challenge:</strong> Banking data can't leave the network. Managed vector databases (Pinecone, Weaviate) require sending schema descriptions to external servers — compliance team rejected this.</p>
+<p><strong>The solution:</strong> Custom in-memory vector store. Banking schemas are small (&lt;1000 entries) — brute-force cosine similarity on 1000 vectors of 1536 dimensions takes &lt;10ms. No external dependency, no data leaves the network.</p>
+<p><strong>The math that makes this work:</strong></p>
+<pre><code>1000 schemas × 1536 dimensions × 4 bytes = ~6MB in memory
+Cosine similarity on 1000 vectors = ~1000 dot products = &lt;10ms
+</code></pre>
+<p>At 10K+ schemas, we'd migrate to FAISS or a self-hosted vector DB. But for banking schemas, custom is optimal.</p>
+<h3>4.3 Agent Cost Control</h3>
+<p><strong>The challenge:</strong> An autonomous agent could run forever — each LLM call costs ~$0.05. An infinite loop costs real money.</p>
+<p><strong>The solution:</strong>
+1. <strong>Max steps = 10</strong> — investigation caps at 10 steps ($0.50 max)
+2. <strong>Step dedup</strong> — if agent generates the same SQL twice, force stop
+3. <strong>Timeout</strong> — 5-minute wall-clock timeout regardless of step count
+4. <strong>Audit trail</strong> — every step logged with thought, action, result, duration</p>
+<h3>4.4 SQL Injection in Generated SQL</h3>
+<p><strong>The challenge:</strong> The LLM generates SQL from user input. What if a user asks: "Show me all data; DROP TABLE fact_transactions; --"?</p>
+<p><strong>The solution:</strong>
+1. BigQuery service account has READ-ONLY access (no DML/DDL)
+2. Generated SQL is parsed and validated before execution — only SELECT allowed
+3. Parameterized project/dataset names (not from user input)
+4. Rate limiting on queries per user</p>
+<hr />
+<h2>5. Problems Faced &amp; Lessons Learned</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Root Cause</th>
+<th>Resolution</th>
+<th>Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLM generating MySQL syntax instead of BigQuery</td>
+<td>Not enough context in system prompt</td>
+<td>Added explicit "BigQuery Standard SQL only" + examples</td>
+<td>Always specify the exact SQL dialect in prompts</td>
+</tr>
+<tr>
+<td>Vector store returning wrong tables</td>
+<td>Schema descriptions too generic ("transaction table")</td>
+<td>Enriched descriptions with column details + sample queries</td>
+<td>More context in embedded text = better retrieval</td>
+</tr>
+<tr>
+<td>Agent re-running the same SQL</td>
+<td>No memory of previous actions (prompt too short)</td>
+<td>Full step history included in every prompt</td>
+<td>Agent context window is critical — include full history</td>
+</tr>
+<tr>
+<td>Cosine similarity too slow on large embeddings</td>
+<td>Computing 3072-dim similarity for every query</td>
+<td>Reduced to 1536-dim (negligible accuracy loss, 2x speed)</td>
+<td>Embedding dimension is a speed/accuracy tradeoff</td>
+</tr>
+<tr>
+<td>CI/CD tests flaky on BigQuery calls</td>
+<td>Integration tests hitting real BigQuery (rate limits)</td>
+<td>Mock BQ client in unit tests, real BQ only in integration</td>
+<td>Separate unit tests (fast, mocked) from integration tests (slow, real)</td>
+</tr>
+<tr>
+<td>Prompt too long → token limit exceeded</td>
+<td>Including all 20+ schemas in every prompt</td>
+<td>Vector store retrieves only top 3 → reduces prompt by 80%</td>
+<td>RAG is fundamentally a context window optimization</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>6. Interview Questions &amp; Answers</h2>
+<h3>AI Architecture</h3>
+<p><strong>Q: Walk me through your RAG pipeline end to end.</strong></p>
+<p>A: 
+1. <strong>Embed question</strong>: "Show me high-risk customers" → tokenizer splits into subword tokens → static embedding for each token (1536 dims) → positional encoding → transformer self-attention blocks → contextual embedding → single vector (mean pooling)
+2. <strong>Cosine search</strong>: Compare question vector against all schema vectors (1000 comparisons, &lt;10ms). Find top 3: fact_fraud_alerts (0.91), dim_customer (0.87), fact_transactions (0.72)
+3. <strong>Build prompt</strong>: System instructions ("You are a BigQuery SQL expert") + retrieved schemas (table names, column descriptions, sample queries) + user question + rules (partition filter, no PII)
+4. <strong>LLM generates SQL</strong>: Token by token via masked self-attention. Each generated token attends to all previous tokens (prompt + already-generated SQL). Output: <code>SELECT c.customer_id, c.risk_category, COUNT(f.alert_id)...</code>
+5. <strong>Execute on BigQuery</strong>: Run the SQL, get results
+6. <strong>Summarize</strong>: Feed results back to LLM, ask for plain English summary. Output: "There are 47 high-risk customers, primarily in the HNI segment..."</p>
+<p><strong>Q: Why build a custom agent instead of using LangChain?</strong></p>
+<p>A: Three reasons specific to banking:
+1. <strong>Audit trail</strong>: Banking compliance requires logging every step — what the agent thought, what it did, what it saw. LangChain's internal state management makes this hard to extract.
+2. <strong>Cost control</strong>: We need hard limits on steps and spending. Custom loop gives us <code>max_steps</code>, timeout, and dedup — LangChain's agent executor doesn't expose these cleanly.
+3. <strong>Security</strong>: Banking compliance requires reviewing all dependencies. LangChain brings in 50+ transitive dependencies — each one is a security review. Our custom agent has zero external dependencies beyond the LLM client.</p>
+<p><strong>Q: What's the difference between static and contextual embeddings? Why does it matter?</strong></p>
+<p>A: <strong>Static</strong> (Word2Vec, 300-dim): "bank" always gets the same vector, whether it's "river bank" or "bank account." Trained by predicting neighboring words (Skip-gram/CBOW) — captures co-occurrence but not context. <strong>Contextual</strong> (Transformer, 1536-dim): "bank" gets a DIFFERENT vector depending on surrounding words. Achieved through self-attention — each token attends to ALL other tokens, so "bank" next to "river" gets nature-context features, while "bank" next to "account" gets finance-context features. <strong>Why it matters</strong>: In our vector store, "fraud_score" needs to match "suspicious transactions" — they share no words. Static embeddings would fail. Contextual embeddings capture the semantic relationship because "fraud" in context of "score" and "suspicious" in context of "transactions" point in similar directions in 1536-dim space.</p>
+<p><strong>Q: How does masked self-attention work in SQL generation?</strong></p>
+<p>A: When generating SQL, the model predicts one token at a time. At each step, the current token can attend to (look at) ALL previous tokens, but NOT future tokens — this is the "mask." So when generating "customer_id" after "SELECT", the model attends to: the full prompt (schemas, question, rules) + "SELECT". It knows we're selecting columns, and based on the schema context, it picks "customer_id" as the most probable next token. This autoregressive, left-to-right generation is why prompt quality matters so much — the schemas in the prompt are the ONLY source of truth.</p>
+<p><strong>Q: Explain cosine similarity mathematically and intuitively.</strong></p>
+<p>A: <strong>Math</strong>: <code>sim(A, B) = dot(A, B) / (||A|| × ||B||)</code> where dot product = sum of element-wise multiplication, and ||A|| = sqrt of sum of squares (L2 norm). Result ranges from -1 to 1. <strong>Intuitively</strong>: Imagine two arrows in 1536-dimensional space. Cosine measures the ANGLE between them. If they point the same direction (small angle) → high similarity. If they're perpendicular (90°) → zero similarity. <strong>Why not Euclidean</strong>: Euclidean measures absolute distance — affected by vector LENGTH. A 100-word document about "fraud" and a 10-word document about "fraud" have different lengths but the same direction. Cosine correctly says they're similar; Euclidean would say they're far apart.</p>
+<p><strong>Q: What prompting techniques do you use and when?</strong></p>
+<p>A: 
+- <strong>Zero-shot</strong>: Simple SQL queries. Just schema + question + rules. Works when the query pattern is straightforward.
+- <strong>Few-shot</strong>: Complex joins or banking-specific patterns. Include 2-3 examples of question → SQL. The examples teach the model our conventions (BigQuery syntax, partition filters, join patterns).
+- <strong>Chain-of-thought</strong>: Multi-table analysis. "Think step by step: what data do I need? Which tables? How to join?" Forces the model to reason before generating SQL.
+- <strong>ReAct</strong>: Agent investigation. "THOUGHT: what to investigate → ACTION: which tool → OBSERVATION: result." The structured format keeps the agent on track and produces parseable JSON actions.</p>
+<hr />
+<h3>System Design</h3>
+<p><strong>Q: How would you scale this system for 100x more schemas?</strong></p>
+<p>A: At 100K schemas:
+1. <strong>Replace custom vector store with FAISS</strong> — Facebook's library for efficient similarity search. Uses approximate nearest neighbor (ANN) — trades minor accuracy for 100x speed.
+2. <strong>Hierarchical retrieval</strong> — First retrieve relevant domains (fraud, compliance, transactions), then search within that domain. Two-stage retrieval.
+3. <strong>Schema caching</strong> — Cache popular schema embeddings in Redis. 80% of queries hit the same 20% of schemas.
+4. <strong>Embedding pre-computation</strong> — Compute and store schema embeddings at indexing time. Only re-compute when schema changes.</p>
+<p><strong>Q: How would you handle multiple LLM providers failing simultaneously?</strong></p>
+<p>A: Defense in depth:
+1. <strong>Primary</strong>: OpenAI (lowest latency)
+2. <strong>Fallback 1</strong>: Anthropic (auto-switch on 5xx errors)
+3. <strong>Fallback 2</strong>: Self-hosted model (runs on our infrastructure)
+4. <strong>Circuit breaker</strong>: After 3 failures in 60 seconds, switch to fallback
+5. <strong>Degraded mode</strong>: If all LLMs fail, return raw SQL results without natural language summary</p>
+<hr />
+<h3>Behavioral / STAR</h3>
+<p><strong>Q: Why did you build this project?</strong></p>
+<p>A: I wanted to go beyond theoretical AI knowledge into production implementation. Every data engineer talks about "AI integration" but few have actually built the vector store, designed the embedding pipeline, implemented the ReAct agent loop, and handled the edge cases (SQL injection, cost control, provider failover). This project demonstrates that I can design and build the entire AI stack — not just use a library.</p>
+<p><strong>Q: What was the hardest design decision?</strong></p>
+<p>A: <strong>Situation</strong>: Choosing between fine-tuning an LLM on banking data vs RAG. <strong>Task</strong>: Maximize SQL generation accuracy. <strong>Action</strong>: I prototyped both. Fine-tuning required 500+ labeled question-SQL pairs (didn't have), GPU compute ($500+/training run), and goes stale when schemas change. RAG uses actual schemas in real-time (always current), costs only per API call, and adapts instantly when tables are added/changed. <strong>Result</strong>: RAG achieved ~90% accuracy at a fraction of the cost. The deciding factor: schemas change monthly — fine-tuning would need monthly retraining.</p>
+<hr />
+<h2>7. Key Numbers to Remember</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pipeline throughput</td>
+<td>5M+ records/month</td>
+<td>Across banking sources</td>
+</tr>
+<tr>
+<td>Query performance improvement</td>
+<td>+25%</td>
+<td>Partitioning + clustering</td>
+</tr>
+<tr>
+<td>Bad-record rate</td>
+<td>&lt;1%</td>
+<td>5-check quality framework</td>
+</tr>
+<tr>
+<td>NL query accuracy (RAG)</td>
+<td>~90%</td>
+<td>Schema retrieval + few-shot</td>
+</tr>
+<tr>
+<td>Agent investigation time</td>
+<td>Minutes</td>
+<td>vs hours manual</td>
+</tr>
+<tr>
+<td>CI/CD deployment</td>
+<td>&lt;10 min</td>
+<td>PR to production</td>
+</tr>
+<tr>
+<td>Test coverage</td>
+<td>92%</td>
+<td>Unit + integration</td>
+</tr>
+<tr>
+<td>Vector search latency</td>
+<td>&lt;10ms</td>
+<td>1000 schemas, 1536 dims</td>
+</tr>
+<tr>
+<td>Embedding dimensions</td>
+<td>1536</td>
+<td>Contextual, transformer-based</td>
+</tr>
+<tr>
+<td>Max agent steps</td>
+<td>10</td>
+<td>$0.50 cost cap per investigation</td>
+</tr>
+</tbody>
+</table>
+            </article>
+        </div>
+    </main>
+
+    <!-- Mermaid.js for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose',
+                themeVariables: {
+                    background: '#0d1117',
+                    primaryColor: '#1f6feb',
+                    primaryTextColor: '#c9d1d9',
+                    lineColor: '#8b949e'
+                }
+            });
+            
+            // Convert code blocks with language-mermaid to div.mermaid
+            document.querySelectorAll('pre code.language-mermaid').forEach(function(el) {
+                let pre = el.parentElement;
+                let div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = el.textContent;
+                pre.parentNode.replaceChild(div, pre);
+            });
+        });
+    </script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

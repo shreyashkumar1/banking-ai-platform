@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Enterprise Data Pipelines (TCS/Sainsbury) — Banking AI Platform Portfolio</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Highlight.js VS2015 Dark Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --sidebar-bg: rgba(22, 27, 34, 0.7);
+            --content-bg: #161b22;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #c9d1d9;
+            --text-bright: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --accent-bg: rgba(56, 139, 253, 0.15);
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Glassmorphic Design */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: flex-col;
+            padding: 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background: var(--accent-bg);
+            color: var(--accent-color);
+            border-color: rgba(56, 139, 253, 0.3);
+            font-weight: 600;
+        }
+
+        /* Main Content Panel */
+        main {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 60px 80px;
+            max-width: 1200px;
+            min-width: 0; /* Prevents overflow issues */
+        }
+
+        .content-card {
+            background: var(--content-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Markdown Styling (Modernized GitHub Dark look) */
+        .markdown-body {
+            font-size: 16px;
+        }
+
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            color: var(--text-bright);
+            font-weight: 700;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+            letter-spacing: -0.3px;
+        }
+
+        .markdown-body h1 {
+            font-size: 32px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .markdown-body h2 {
+            font-size: 22px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 36px;
+        }
+
+        .markdown-body h3 {
+            font-size: 18px;
+            margin-top: 24px;
+        }
+
+        .markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body table {
+            margin-bottom: 18px;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            padding-left: 24px;
+        }
+
+        .markdown-body li {
+            margin-bottom: 6px;
+        }
+
+        .markdown-body a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Blocks & Tables */
+        .markdown-body pre {
+            background-color: #05070a;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+        }
+
+        .markdown-body code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #ff7b72;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: inherit;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .markdown-body th, .markdown-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .markdown-body hr {
+            height: 1px;
+            background-color: var(--border-color);
+            border: none;
+            margin: 36px 0;
+        }
+
+        .markdown-body blockquote {
+            border-left: 4px solid var(--text-muted);
+            padding-left: 16px;
+            color: var(--text-muted);
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 16px;
+            }
+            .sidebar-header {
+                margin-bottom: 16px;
+                padding-bottom: 10px;
+            }
+            main {
+                margin-left: 0;
+                padding: 24px;
+            }
+            .content-card {
+                padding: 24px;
+            }
+        }
+
+        /* Mermaid diagram block styling */
+        .mermaid {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="sidebar-header">
+            <h1>Shreyash Kumar</h1>
+            <p>Data & AI Engineer Portfolio</p>
+        </div>
+        <nav>
+            <a href="shreyash_kumar_resume.html" class="nav-item ">📄 Professional Resume</a>
+<a href="technical_walkthrough.html" class="nav-item ">⚙️ Technical Code Walkthrough</a>
+<a href="01_cloud_native_data_platform.html" class="nav-item ">☁️ Cloud Native Platform (Mindsprint)</a>
+<a href="02_enterprise_data_pipelines.html" class="nav-item active">🚀 Enterprise Data Pipelines (TCS/Sainsbury)</a>
+<a href="03_data_quality_governance.html" class="nav-item ">🛡️ Data Quality & Governance</a>
+<a href="04_ai_genai_systems.html" class="nav-item ">🧠 AI & Generative AI Systems</a>
+<a href="interview_prep_banking_ai.html" class="nav-item ">💬 Interview Prep: Banking AI</a>
+<a href="interview_prep_mindsprint.html" class="nav-item ">💬 Interview Prep: Mindsprint</a>
+<a href="interview_prep_tcs.html" class="nav-item ">💬 Interview Prep: TCS/Sainsbury</a>
+<a href="runbook.html" class="nav-item ">📖 Operations Runbook</a>
+<a href="ai_guide.html" class="nav-item ">📘 AI & NLP Concepts Guide</a>
+        </nav>
+    </aside>
+
+    <main>
+        <div class="content-card">
+            <article class="markdown-body">
+                <h1>Sainsbury's Retail Data Platform @ Scale</h1>
+<h2>Tata Consultancy Services | Data Engineer | Aug 2021 – Oct 2024</h2>
+<h3>Client: Sainsbury's (UK's 2nd Largest Grocery Retailer)</h3>
+<hr />
+<h2>1. The Real Problem</h2>
+<p>Sainsbury's operates 1,400+ stores across the UK, processes 24M customer transactions per week, manages 30,000+ SKUs per supermarket, and runs a Nectar loyalty programme with 18M active cardholders. Their data challenges are uniquely grocery-retail:</p>
+<ul>
+<li>
+<p><strong>Demand forecasting lag</strong> — store replenishment ran on batch data that was 6-8 hours stale. For fresh produce (bakery, dairy, ready meals), this meant systematic overstocking (25% waste on short-shelf items) or stockouts (12% lost revenue on promotional items).</p>
+</li>
+<li>
+<p><strong>Nectar loyalty data unusable at scale</strong> — 18M cardholders generate 120M+ Nectar events/week (scans, points earned, redeemed, partner transactions). The Spark pipeline processing loyalty joins took 5+ hours because a handful of power shoppers (1,500+ transactions/month) skewed the customer_id join 200:1.</p>
+</li>
+<li>
+<p><strong>Supplier settlement nightmare</strong> — Sainsbury's negotiates cost-price agreements with 3,000+ suppliers (Unilever, Procter &amp; Gamble, own-label manufacturers). Monthly settlement required joining order data with delivery confirmations, promotional allowances, and markdown claims across 4 legacy systems. Finance team was taking 10 days to close month-end.</p>
+</li>
+<li>
+<p><strong>GDPR compliance risk</strong> — customer PII (names, addresses, Nectar card data) was scattered across multiple BigQuery datasets without row-level security. A junior analyst could query full customer names alongside purchase history. ICO (UK data authority) could fine up to £17.5M for a breach.</p>
+</li>
+</ul>
+<hr />
+<h2>2. System Architecture</h2>
+<pre><code class="language-mermaid">graph TB
+    subgraph Sources[&quot;Sainsbury's Source Systems&quot;]
+        POS[&quot;EPOS Tills\n(1400+ stores, 24M txn/week)&quot;]
+        NECTAR[&quot;Nectar Loyalty Platform\n(18M cardholders)&quot;]
+        WH[&quot;Warehouse &amp; Distribution\n(Depot replenishment)&quot;]
+        SUPPLY[&quot;Supplier Portal\n(3000+ suppliers, P&amp;G, Unilever)&quot;]
+        PROMO[&quot;Promotions Engine\n(multibuy, Nectar price, meal deals)&quot;]
+    end
+
+    subgraph Ingest[&quot;Ingestion Layer&quot;]
+        PS[&quot;Cloud Pub/Sub\n24M transactions/week&quot;]
+        DF[&quot;Dataflow (Apache Beam)\nStreaming EPOS + Nectar events&quot;]
+        DLQ[&quot;Dead Letter Queue\nMalformed/missing barcodes&quot;]
+    end
+
+    subgraph Batch[&quot;Batch Processing&quot;]
+        GCS[&quot;GCS Data Lake\nRaw Parquet — partitioned by store region&quot;]
+        SPARK[&quot;Dataproc PySpark\nAQE enabled, broadcast joins&quot;]
+        INCR[&quot;Watermark-based incremental\nSkips processed store-days&quot;]
+    end
+
+    subgraph Warehouse[&quot;BigQuery Warehouse&quot;]
+        FACT_SALES[&quot;fact_sales\npartitioned: sale_date\nclustered: store_id, category_code&quot;]
+        FACT_NECTAR[&quot;fact_nectar_events\npartitioned: event_date\nclustered: nectar_card_id&quot;]
+        FACT_SUPPLY[&quot;fact_supplier_orders\npartitioned: order_month\nclustered: supplier_id&quot;]
+        DIM_PRODUCT[&quot;dim_product\n(30K SKUs, barcode, category hierarchy)&quot;]
+        DIM_STORE[&quot;dim_store\n(1400+ stores, format, region)&quot;]
+        DIM_CUSTOMER[&quot;dim_customer\n(18M Nectar, PII column-level masked)&quot;]
+    end
+
+    subgraph AI[&quot;Analytics &amp; AI&quot;]
+        DEMAND[&quot;Demand Forecasting Features\nStore × SKU × day level&quot;]
+        BASKET[&quot;Basket Analysis\nAssociation rules, cross-sell&quot;]
+        SUPPLIER[&quot;Supplier Settlement Engine\nAutomated reconciliation&quot;]
+    end
+
+    subgraph Gov[&quot;Governance&quot;]
+        RBAC[&quot;Row-Level Security\nAnalysts see own region only&quot;]
+        PII[&quot;Column-Level Masking\nCustomer name, address masked&quot;]
+        LINEAGE[&quot;Data Lineage\nSource → transform → destination&quot;]
+    end
+
+    POS --&gt; PS
+    NECTAR --&gt; PS
+    WH --&gt; GCS
+    SUPPLY --&gt; GCS
+    PROMO --&gt; GCS
+
+    PS --&gt; DF
+    PS -.-&gt;|failures| DLQ
+    DF --&gt; FACT_SALES
+    DF --&gt; FACT_NECTAR
+
+    GCS --&gt; SPARK
+    SPARK --&gt; FACT_SUPPLY
+    SPARK --&gt; DIM_PRODUCT
+    SPARK --&gt; DIM_STORE
+
+    FACT_SALES --&gt; DEMAND
+    FACT_NECTAR --&gt; BASKET
+    FACT_SUPPLY --&gt; SUPPLIER
+
+    DIM_CUSTOMER --&gt; RBAC
+    DIM_CUSTOMER --&gt; PII
+
+    style Sources fill:#0d1117,stroke:#f78166,color:#c9d1d9
+    style Ingest fill:#161b22,stroke:#58a6ff,color:#c9d1d9
+    style Batch fill:#161b22,stroke:#3fb950,color:#c9d1d9
+    style Warehouse fill:#161b22,stroke:#79c0ff,color:#c9d1d9
+    style AI fill:#1a1a2e,stroke:#d2a8ff,color:#c9d1d9
+    style Gov fill:#0d1117,stroke:#ffa657,color:#c9d1d9
+</code></pre>
+<hr />
+<h2>3. Store Replenishment: Why Stale Data Costs Millions in Grocery</h2>
+<h3>The 6-Hour Lag Problem</h3>
+<p>Grocery is different from every other retail vertical because of <strong>perishability</strong>. A laptop sits on a shelf for months. A ready meal has a 3-day shelf life. A bakery croissant has 8 hours.</p>
+<p>The replenishment system ran on a nightly batch from EPOS tills. At 6 AM, it calculated what to order from the depot based on yesterday's sales. But by 6 AM, the morning rush has already started:</p>
+<ul>
+<li>Milk sold out at 7:30 AM — replenishment won't know until tonight</li>
+<li>200 croissants arrived at 5 AM based on yesterday's demand — today is a bank holiday and demand is 50% lower, 100 go to waste</li>
+<li>A multibuy promotion on pasta went viral on social media — stores can't react until tomorrow's replenishment run</li>
+</ul>
+<h3>What I Built: Near-Real-Time EPOS Streaming</h3>
+<pre><code class="language-python">class EPOSSaleEventFn(beam.DoFn):
+    &quot;&quot;&quot;
+    Process EPOS (Electronic Point of Sale) events in near real-time.
+
+    Sainsbury's EPOS tills send a sale event per scanned item.
+    Events arrive via Pub/Sub — one subscription per store region
+    (London, South East, Midlands, North, Scotland, Wales).
+
+    Why regional subscriptions?
+    - Ordering isolation: a bad batch of London events doesn't block Scotland
+    - Independent scaling: London stores generate 8x more events than Wales
+    - Regional teams can manage their own alerting thresholds
+
+    What makes grocery EPOS data messy:
+    - Barcodes for weighed items (fruit, meat) are store-generated, not EAN-13
+    - Multibuy promotions (3 for £5) split the discount across items
+    - Staff discount events have different PII handling requirements
+    &quot;&quot;&quot;
+
+    WEIGHED_BARCODE_PREFIX = &quot;2&quot;  # Internal weighing barcodes start with 2
+
+    def process(self, element):
+        event = json.loads(element.decode(&quot;utf-8&quot;))
+
+        # --- Validate mandatory fields ---
+        required = [&quot;store_id&quot;, &quot;barcode&quot;, &quot;quantity&quot;, &quot;sale_price_pence&quot;, &quot;till_id&quot;, &quot;timestamp&quot;]
+        missing = [f for f in required if f not in event or event[f] is None]
+        if missing:
+            yield beam.pvalue.TaggedOutput(&quot;dead_letter&quot;, {
+                &quot;event&quot;: event, &quot;reason&quot;: f&quot;missing_fields: {missing}&quot;
+            })
+            return
+
+        # --- Handle weighed items (store-generated barcodes) ---
+        if str(event[&quot;barcode&quot;]).startswith(self.WEIGHED_BARCODE_PREFIX):
+            event[&quot;barcode_type&quot;] = &quot;WEIGHED&quot;
+            # Extract embedded product code and weight from barcode
+            # Format: 2PPPPPPWWWWWC (P=product, W=weight in grams, C=check)
+            event[&quot;product_code&quot;] = str(event[&quot;barcode&quot;])[1:7]
+            event[&quot;weight_grams&quot;] = int(str(event[&quot;barcode&quot;])[7:12])
+        else:
+            event[&quot;barcode_type&quot;] = &quot;EAN13&quot;
+
+        # --- Denormalise promotion ---
+        if event.get(&quot;promotion_id&quot;):
+            event[&quot;is_promoted&quot;] = True
+            event[&quot;promotion_type&quot;] = event.get(&quot;promotion_type&quot;, &quot;UNKNOWN&quot;)
+        else:
+            event[&quot;is_promoted&quot;] = False
+
+        # --- Convert pence to pounds for analytics ---
+        event[&quot;sale_price_gbp&quot;] = round(event[&quot;sale_price_pence&quot;] / 100.0, 2)
+
+        # --- Partition key ---
+        event[&quot;sale_date&quot;] = event[&quot;timestamp&quot;][:10]
+        event[&quot;store_region&quot;] = self._store_to_region(event[&quot;store_id&quot;])
+
+        yield event
+
+    def _store_to_region(self, store_id: str) -&gt; str:
+        &quot;&quot;&quot;Map store ID to region. In production: lookup from dim_store cache.&quot;&quot;&quot;
+        region_map = {
+            &quot;LON&quot;: &quot;london&quot;, &quot;SE&quot;: &quot;south_east&quot;, &quot;MID&quot;: &quot;midlands&quot;,
+            &quot;NTH&quot;: &quot;north&quot;, &quot;SCO&quot;: &quot;scotland&quot;, &quot;WAL&quot;: &quot;wales&quot;
+        }
+        prefix = store_id[:3] if len(store_id) &gt;= 3 else &quot;UNK&quot;
+        return region_map.get(prefix, &quot;other&quot;)
+</code></pre>
+<p><strong>Result:</strong> Store managers now see sales velocity updated every 5 minutes. Depot replenishment orders can be adjusted intra-day. Fresh produce waste on short-shelf items: <strong>reduced 18%</strong> across pilot stores.</p>
+<hr />
+<h2>4. The Nectar Loyalty Skew — 200:1 Power Shoppers</h2>
+<p>18M Nectar cardholders, but the top 500 "power shoppers" generate 1,500+ transactions per month (they use Nectar for everything — fuel, Tu clothing, Argos, partner offers). When you join <code>fact_sales</code> to <code>fact_nectar_events</code> on <code>nectar_card_id</code>, those 500 users create 200:1 data skew.</p>
+<h3>What I Tried First (That Failed)</h3>
+<ol>
+<li>
+<p><strong>AQE alone</strong>: <code>spark.sql.adaptive.skewJoin.enabled = true</code>. AQE splits skewed partitions when skew exceeds 5x median. At 200x, the split partitions were still 40x larger than normal — executors ran out of memory.</p>
+</li>
+<li>
+<p><strong>Increasing executor memory to 16GB</strong>: Delayed the OOM by 20 minutes. Same result.</p>
+</li>
+</ol>
+<h3>The Actual Fix: Pre-Aggregate Then Join</h3>
+<pre><code class="language-python">def join_nectar_to_sales(spark: SparkSession, date: str) -&gt; DataFrame:
+    &quot;&quot;&quot;
+    Join Nectar loyalty events to EPOS sales without hitting the 200:1 skew.
+
+    Key insight: we don't need per-transaction Nectar details in the sales fact.
+    We need per-customer-per-day aggregates:
+    - Total Nectar points earned today
+    - Total Nectar points redeemed today
+    - Number of Nectar partner transactions
+
+    By pre-aggregating Nectar events to customer-day level BEFORE the join,
+    the skewed 1,500-transaction power shopper becomes ONE row per day.
+    Join ratio: 1:1 instead of 1:200.
+    &quot;&quot;&quot;
+    sales = spark.read.parquet(f&quot;gs://sainsburys-raw/epos/sale_date={date}/&quot;)
+    nectar = spark.read.parquet(f&quot;gs://sainsburys-raw/nectar/event_date={date}/&quot;)
+
+    # Pre-aggregate Nectar to customer-day level (1 row per customer per day)
+    nectar_daily = nectar.groupBy(&quot;nectar_card_id&quot;, &quot;event_date&quot;).agg(
+        F.sum(F.when(F.col(&quot;event_type&quot;) == &quot;EARN&quot;, F.col(&quot;points&quot;)).otherwise(0))
+         .alias(&quot;points_earned_today&quot;),
+        F.sum(F.when(F.col(&quot;event_type&quot;) == &quot;REDEEM&quot;, F.col(&quot;points&quot;)).otherwise(0))
+         .alias(&quot;points_redeemed_today&quot;),
+        F.countDistinct(F.when(F.col(&quot;source&quot;) != &quot;SAINSBURYS&quot;, F.col(&quot;partner_name&quot;)))
+         .alias(&quot;partner_brands_today&quot;),
+        F.count(&quot;*&quot;).alias(&quot;total_nectar_events&quot;),
+    )
+    # nectar_daily: ~800K rows for a normal day. Trivially broadcastable.
+
+    # Aggregate sales to customer-day (for the join key)
+    sales_daily = sales.groupBy(&quot;nectar_card_id&quot;, &quot;sale_date&quot;).agg(
+        F.sum(&quot;sale_price_gbp&quot;).alias(&quot;daily_spend_gbp&quot;),
+        F.count(&quot;*&quot;).alias(&quot;items_purchased&quot;),
+        F.countDistinct(&quot;store_id&quot;).alias(&quot;stores_visited&quot;),
+        F.collect_set(&quot;category_code&quot;).alias(&quot;categories_shopped&quot;),
+    )
+
+    # Now join: both sides are at customer-day level. No skew.
+    result = sales_daily.join(
+        F.broadcast(nectar_daily),
+        on=(sales_daily[&quot;nectar_card_id&quot;] == nectar_daily[&quot;nectar_card_id&quot;]) &amp;
+           (sales_daily[&quot;sale_date&quot;] == nectar_daily[&quot;event_date&quot;]),
+        how=&quot;left&quot;
+    )
+
+    return result
+</code></pre>
+<p><strong>Result:</strong> Nectar join pipeline: <strong>5.2 hours → 48 minutes</strong>. No OOM. Works for power shoppers and normal customers identically.</p>
+<hr />
+<h2>5. Supplier Settlement — From 10 Days to 2 Days</h2>
+<p>Monthly supplier settlement required reconciling:
+1. <strong>Purchase orders</strong> (what Sainsbury's ordered from the supplier)
+2. <strong>Goods received notes</strong> (what actually arrived at the depot)
+3. <strong>Promotional allowances</strong> (supplier funds Sainsbury's multibuy promotions)
+4. <strong>Markdown claims</strong> (supplier compensates for products sold below cost at end of life)</p>
+<p>These lived in 4 separate systems. The finance team manually joined spreadsheets. 10 days to close month-end.</p>
+<pre><code class="language-python">def build_supplier_settlement(spark: SparkSession, month: str) -&gt; DataFrame:
+    &quot;&quot;&quot;
+    Automated supplier settlement reconciliation.
+
+    Matches purchase orders → deliveries → promo allowances → markdown claims.
+
+    The tricky part: delivery short-shipments.
+    Sainsbury's orders 1000 units of Heinz Beans. 
+    Heinz ships 950 (50 short — out of stock at their warehouse).
+    Sainsbury's should pay for 950, not 1000.
+    But the promo allowance was calculated on 1000.
+    So the allowance needs to be pro-rated to 950/1000 = 95%.
+    &quot;&quot;&quot;
+    orders = spark.read.parquet(f&quot;gs://sainsburys-finance/orders/month={month}/&quot;)
+    deliveries = spark.read.parquet(f&quot;gs://sainsburys-finance/grn/month={month}/&quot;)
+    promos = spark.read.parquet(f&quot;gs://sainsburys-finance/promo-allowances/month={month}/&quot;)
+    markdowns = spark.read.parquet(f&quot;gs://sainsburys-finance/markdowns/month={month}/&quot;)
+
+    # Step 1: Match orders to deliveries (find short-shipments)
+    order_delivery = orders.join(deliveries, on=[&quot;supplier_id&quot;, &quot;po_number&quot;], how=&quot;left&quot;)
+    order_delivery = order_delivery.withColumn(
+        &quot;delivery_rate&quot;, 
+        F.coalesce(F.col(&quot;qty_delivered&quot;) / F.col(&quot;qty_ordered&quot;), F.lit(0.0))
+    ).withColumn(
+        &quot;short_shipment_flag&quot;,
+        F.col(&quot;delivery_rate&quot;) &lt; 0.98  # Allow 2% tolerance
+    )
+
+    # Step 2: Pro-rate promo allowances for short-shipped orders
+    with_promos = order_delivery.join(
+        promos, on=[&quot;supplier_id&quot;, &quot;product_code&quot;], how=&quot;left&quot;
+    ).withColumn(
+        &quot;adjusted_promo_allowance&quot;,
+        F.col(&quot;promo_allowance_gbp&quot;) * F.col(&quot;delivery_rate&quot;)
+    )
+
+    # Step 3: Add markdown claims
+    settlement = with_promos.join(
+        markdowns, on=[&quot;supplier_id&quot;, &quot;product_code&quot;, &quot;store_id&quot;], how=&quot;left&quot;
+    )
+
+    # Step 4: Calculate net payable per supplier
+    result = settlement.groupBy(&quot;supplier_id&quot;, &quot;supplier_name&quot;).agg(
+        F.sum(F.col(&quot;unit_cost_gbp&quot;) * F.col(&quot;qty_delivered&quot;)).alias(&quot;goods_cost_gbp&quot;),
+        F.sum(&quot;adjusted_promo_allowance&quot;).alias(&quot;promo_income_gbp&quot;),
+        F.sum(&quot;markdown_claim_gbp&quot;).alias(&quot;markdown_income_gbp&quot;),
+        F.countDistinct(&quot;po_number&quot;).alias(&quot;total_pos&quot;),
+        F.sum(F.when(F.col(&quot;short_shipment_flag&quot;), 1).otherwise(0)).alias(&quot;short_shipped_pos&quot;),
+    ).withColumn(
+        &quot;net_payable_gbp&quot;,
+        F.col(&quot;goods_cost_gbp&quot;) - F.col(&quot;promo_income_gbp&quot;) - F.col(&quot;markdown_income_gbp&quot;)
+    )
+
+    return result
+</code></pre>
+<p><strong>Result:</strong> Month-end settlement: <strong>10 days → 2 days</strong>. Short-shipment discrepancies caught automatically — saved £340K in the first quarter from under-deductions that finance had been missing.</p>
+<hr />
+<h2>6. GDPR Compliance — Column &amp; Row Level Security</h2>
+<pre><code class="language-sql">-- Column-level security: mask PII from general analysts
+CREATE OR REPLACE TABLE `analytics.dim_customer_secure` AS
+SELECT
+    nectar_card_id,
+    customer_segment,           -- RETAIL, PREMIUM, FUEL_ONLY
+    region,
+    registration_date,
+    -- PII columns: masked for general analysts, visible to data_stewards
+    IF(SESSION_USER() IN UNNEST(@data_stewards), customer_name, 'MASKED') AS customer_name,
+    IF(SESSION_USER() IN UNNEST(@data_stewards), postcode, LEFT(postcode, 3) || ' ***') AS postcode,
+FROM `raw.dim_customer`;
+
+-- Row-level security: regional analysts see only their stores
+CREATE OR REPLACE ROW ACCESS POLICY region_filter
+ON `analytics.fact_sales`
+GRANT TO (&quot;group:london-analysts@sainsburys.co.uk&quot;)
+FILTER USING (store_region = 'london');
+</code></pre>
+<hr />
+<h2>7. Results</h2>
+<table>
+<thead>
+<tr>
+<th>What Changed</th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Store replenishment data lag</td>
+<td>6-8 hours (nightly batch)</td>
+<td>~5 minutes (streaming)</td>
+</tr>
+<tr>
+<td>Fresh produce waste (pilot)</td>
+<td>25% on short-shelf items</td>
+<td>18% (7pp reduction)</td>
+</tr>
+<tr>
+<td>Nectar loyalty pipeline</td>
+<td>5.2 hours (OOM risk)</td>
+<td>48 minutes</td>
+</tr>
+<tr>
+<td>Supplier settlement</td>
+<td>10 days to close month-end</td>
+<td>2 days</td>
+</tr>
+<tr>
+<td>Short-shipment savings</td>
+<td>Untracked</td>
+<td>£340K recovered in Q1</td>
+</tr>
+<tr>
+<td>GDPR compliance</td>
+<td>PII accessible to all</td>
+<td>Column + row level security</td>
+</tr>
+<tr>
+<td>Cluster cost</td>
+<td>Always-on (£8K/month)</td>
+<td>Ephemeral (£1.2K/month)</td>
+</tr>
+<tr>
+<td>Pipeline failures on BBD</td>
+<td>3-4 per event</td>
+<td>Zero (AQE + dead-letter routing)</td>
+</tr>
+</tbody>
+</table>
+            </article>
+        </div>
+    </main>
+
+    <!-- Mermaid.js for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose',
+                themeVariables: {
+                    background: '#0d1117',
+                    primaryColor: '#1f6feb',
+                    primaryTextColor: '#c9d1d9',
+                    lineColor: '#8b949e'
+                }
+            });
+            
+            // Convert code blocks with language-mermaid to div.mermaid
+            document.querySelectorAll('pre code.language-mermaid').forEach(function(el) {
+                let pre = el.parentElement;
+                let div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = el.textContent;
+                pre.parentNode.replaceChild(div, pre);
+            });
+        });
+    </script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

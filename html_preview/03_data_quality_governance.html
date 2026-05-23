@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ Data Quality & Governance — Banking AI Platform Portfolio</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Highlight.js VS2015 Dark Theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/vs2015.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --sidebar-bg: rgba(22, 27, 34, 0.7);
+            --content-bg: #161b22;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #c9d1d9;
+            --text-bright: #f0f6fc;
+            --text-muted: #8b949e;
+            --accent-color: #58a6ff;
+            --accent-bg: rgba(56, 139, 253, 0.15);
+            --sidebar-width: 320px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Glassmorphic Design */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: flex-col;
+            padding: 24px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .sidebar-header p {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background: var(--accent-bg);
+            color: var(--accent-color);
+            border-color: rgba(56, 139, 253, 0.3);
+            font-weight: 600;
+        }
+
+        /* Main Content Panel */
+        main {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 60px 80px;
+            max-width: 1200px;
+            min-width: 0; /* Prevents overflow issues */
+        }
+
+        .content-card {
+            background: var(--content-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Markdown Styling (Modernized GitHub Dark look) */
+        .markdown-body {
+            font-size: 16px;
+        }
+
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+            color: var(--text-bright);
+            font-weight: 700;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            line-height: 1.25;
+            letter-spacing: -0.3px;
+        }
+
+        .markdown-body h1 {
+            font-size: 32px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .markdown-body h2 {
+            font-size: 22px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-top: 36px;
+        }
+
+        .markdown-body h3 {
+            font-size: 18px;
+            margin-top: 24px;
+        }
+
+        .markdown-body p, .markdown-body ul, .markdown-body ol, .markdown-body table {
+            margin-bottom: 18px;
+        }
+
+        .markdown-body ul, .markdown-body ol {
+            padding-left: 24px;
+        }
+
+        .markdown-body li {
+            margin-bottom: 6px;
+        }
+
+        .markdown-body a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code Blocks & Tables */
+        .markdown-body pre {
+            background-color: #05070a;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+        }
+
+        .markdown-body code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #ff7b72;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: inherit;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .markdown-body th, .markdown-body td {
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .markdown-body th {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            font-weight: 600;
+        }
+
+        .markdown-body tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .markdown-body hr {
+            height: 1px;
+            background-color: var(--border-color);
+            border: none;
+            margin: 36px 0;
+        }
+
+        .markdown-body blockquote {
+            border-left: 4px solid var(--text-muted);
+            padding-left: 16px;
+            color: var(--text-muted);
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 16px;
+            }
+            .sidebar-header {
+                margin-bottom: 16px;
+                padding-bottom: 10px;
+            }
+            main {
+                margin-left: 0;
+                padding: 24px;
+            }
+            .content-card {
+                padding: 24px;
+            }
+        }
+
+        /* Mermaid diagram block styling */
+        .mermaid {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="sidebar-header">
+            <h1>Shreyash Kumar</h1>
+            <p>Data & AI Engineer Portfolio</p>
+        </div>
+        <nav>
+            <a href="shreyash_kumar_resume.html" class="nav-item ">📄 Professional Resume</a>
+<a href="technical_walkthrough.html" class="nav-item ">⚙️ Technical Code Walkthrough</a>
+<a href="01_cloud_native_data_platform.html" class="nav-item ">☁️ Cloud Native Platform (Mindsprint)</a>
+<a href="02_enterprise_data_pipelines.html" class="nav-item ">🚀 Enterprise Data Pipelines (TCS/Sainsbury)</a>
+<a href="03_data_quality_governance.html" class="nav-item active">🛡️ Data Quality & Governance</a>
+<a href="04_ai_genai_systems.html" class="nav-item ">🧠 AI & Generative AI Systems</a>
+<a href="interview_prep_banking_ai.html" class="nav-item ">💬 Interview Prep: Banking AI</a>
+<a href="interview_prep_mindsprint.html" class="nav-item ">💬 Interview Prep: Mindsprint</a>
+<a href="interview_prep_tcs.html" class="nav-item ">💬 Interview Prep: TCS/Sainsbury</a>
+<a href="runbook.html" class="nav-item ">📖 Operations Runbook</a>
+<a href="ai_guide.html" class="nav-item ">📘 AI & NLP Concepts Guide</a>
+        </nav>
+    </aside>
+
+    <main>
+        <div class="content-card">
+            <article class="markdown-body">
+                <h1>Data Quality, Governance &amp; Cost Optimization Framework</h1>
+<h2>Cross-Cutting Across Mindsprint &amp; TCS | 2021 – Present</h2>
+<hr />
+<h2>1. Business Context — The "Why"</h2>
+<p>Data quality and governance aren't glamorous, but they're the difference between a platform teams <strong>trust</strong> and one they <strong>work around</strong>. Across both Mindsprint and TCS, I saw the same pattern:</p>
+<ul>
+<li><strong>Silent data corruption:</strong> Pipelines ran successfully but produced wrong numbers. Nobody knew until a VP questioned a dashboard.</li>
+<li><strong>No ownership or access control:</strong> Everyone had admin access to everything. No audit trail. Compliance risk.</li>
+<li><strong>Runaway cloud costs:</strong> Unpartitioned tables, full-scan queries, and always-on clusters burned budget with no visibility.</li>
+<li><strong>Reactive firefighting:</strong> Data issues were discovered days late through angry Slack messages, not automated alerts.</li>
+</ul>
+<p><strong>The goal:</strong> Build a systematic framework for data quality validation, access governance, and cost optimization — embedded directly into the pipeline, not bolted on as an afterthought.</p>
+<hr />
+<h2>2. Architecture Overview</h2>
+<pre><code class="language-mermaid">graph TB
+    subgraph Pipeline[&quot;Data Pipeline&quot;]
+        ING[&quot;Ingestion&quot;]
+        TRN[&quot;Transformation&quot;]
+        LOAD[&quot;Load to Warehouse&quot;]
+    end
+
+    subgraph QualityGate[&quot;Data Quality Gate&quot;]
+        SCHEMA[&quot;Schema Validation&lt;br/&gt;Column types, nullability&quot;]
+        FRESH[&quot;Freshness Check&lt;br/&gt;Is data stale?&quot;]
+        VOL[&quot;Volume Anomaly&lt;br/&gt;Z-score detection&quot;]
+        NULL[&quot;Null Rate Check&lt;br/&gt;Critical field coverage&quot;]
+        BIZ[&quot;Business Rule Check&lt;br/&gt;Domain-specific logic&quot;]
+    end
+
+    subgraph Governance[&quot;Data Governance&quot;]
+        IAM[&quot;IAM Roles &amp;&lt;br/&gt;Service Accounts&quot;]
+        RBAC[&quot;Row/Column Level&lt;br/&gt;Access Control&quot;]
+        LINEAGE[&quot;Data Lineage&lt;br/&gt;&amp; Catalog&quot;]
+        AUDIT[&quot;Audit Logging&quot;]
+    end
+
+    subgraph CostOps[&quot;Cost Optimization&quot;]
+        PART[&quot;Table Partitioning&lt;br/&gt;&amp; Clustering&quot;]
+        EPHEM[&quot;Ephemeral Clusters&lt;br/&gt;(Create → Use → Delete)&quot;]
+        QUOTA[&quot;Query Cost Quotas&lt;br/&gt;&amp; Guardrails&quot;]
+        MONITOR[&quot;Spend Monitoring&lt;br/&gt;&amp; Alerts&quot;]
+    end
+
+    subgraph Response[&quot;Response Layer&quot;]
+        ALERT[&quot;Slack / Email Alerts&quot;]
+        BLOCK[&quot;Pipeline Block&lt;br/&gt;(Stop bad data)&quot;]
+        DLQ[&quot;Dead Letter Queue&lt;br/&gt;(Capture for review)&quot;]
+        DASH[&quot;Quality Dashboard&quot;]
+    end
+
+    ING --&gt; SCHEMA
+    TRN --&gt; VOL
+    TRN --&gt; NULL
+    LOAD --&gt; FRESH
+    LOAD --&gt; BIZ
+
+    SCHEMA --&gt;|fail| DLQ
+    SCHEMA --&gt;|pass| TRN
+    VOL --&gt;|anomaly| ALERT
+    NULL --&gt;|high nulls| BLOCK
+    FRESH --&gt;|stale| ALERT
+    BIZ --&gt;|violation| BLOCK
+
+    IAM -.-&gt; Pipeline
+    RBAC -.-&gt; LOAD
+    LINEAGE -.-&gt; Pipeline
+    AUDIT -.-&gt; Pipeline
+
+    PART -.-&gt; LOAD
+    EPHEM -.-&gt; TRN
+    QUOTA -.-&gt; LOAD
+
+    style Pipeline fill:#1a1a2e,stroke:#e94560,color:#fff
+    style QualityGate fill:#16213e,stroke:#3fb950,color:#fff
+    style Governance fill:#16213e,stroke:#79c0ff,color:#fff
+    style CostOps fill:#16213e,stroke:#ffa657,color:#fff
+    style Response fill:#0d1117,stroke:#f78166,color:#fff
+</code></pre>
+<hr />
+<h2>3. Data Quality Framework — Deep Dive</h2>
+<h3>3.1 The Quality Gate Pipeline</h3>
+<p>Every batch of data passes through <strong>5 automated checks</strong> before reaching BigQuery. If any critical check fails, the pipeline <strong>stops</strong> and alerts the team — bad data never reaches dashboards.</p>
+<pre><code class="language-python">&quot;&quot;&quot;
+Data Quality Framework — Production Implementation
+
+Why a custom framework (not Great Expectations)?
+- Lightweight: No extra dependency to manage across GCP environments
+- Native BigQuery integration: Queries run where the data lives
+- Tight Airflow coupling: Quality checks are DAG tasks with retry/alert logic
+- Simple to extend: Engineers add new checks in minutes, not hours
+&quot;&quot;&quot;
+
+from google.cloud import bigquery
+from dataclasses import dataclass, field
+from datetime import datetime
+from enum import Enum
+import logging
+
+class Severity(Enum):
+    CRITICAL = &quot;critical&quot;  # Blocks pipeline, pages on-call
+    WARNING = &quot;warning&quot;    # Alerts team, pipeline continues
+    INFO = &quot;info&quot;          # Logged only
+
+@dataclass
+class CheckResult:
+    check_name: str
+    table: str
+    passed: bool
+    severity: Severity
+    message: str
+    value: float = 0.0
+    threshold: float = 0.0
+    checked_at: str = field(default_factory=lambda: datetime.utcnow().isoformat())
+
+class DataQualityFramework:
+    def __init__(self, project_id: str):
+        self.client = bigquery.Client(project=project_id)
+        self.results: list[CheckResult] = []
+
+    # ── CHECK 1: Schema Validation ──
+    def check_schema(self, table: str, expected_columns: dict[str, str]):
+        &quot;&quot;&quot;Verify table schema matches expected structure.
+        Why: Schema drift (columns added/removed/renamed) is the #1
+        cause of silent pipeline failures.&quot;&quot;&quot;
+
+        actual = {f.name: f.field_type for f in self.client.get_table(table).schema}
+
+        missing = set(expected_columns.keys()) - set(actual.keys())
+        type_mismatches = {
+            col: (expected_columns[col], actual.get(col))
+            for col in expected_columns
+            if col in actual and actual[col] != expected_columns[col]
+        }
+
+        passed = len(missing) == 0 and len(type_mismatches) == 0
+        msg = &quot;Schema OK&quot; if passed else f&quot;Missing: {missing}, Type mismatches: {type_mismatches}&quot;
+
+        self.results.append(CheckResult(
+            check_name=&quot;schema_validation&quot;, table=table,
+            passed=passed, severity=Severity.CRITICAL, message=msg
+        ))
+
+    # ── CHECK 2: Freshness ──
+    def check_freshness(self, table: str, timestamp_col: str, max_hours: int = 6):
+        &quot;&quot;&quot;Ensure data is not stale.
+        Why: If ingestion silently fails, the table still exists
+        but contains old data. Reports look fine but are wrong.&quot;&quot;&quot;
+
+        query = f&quot;&quot;&quot;
+        SELECT TIMESTAMP_DIFF(CURRENT_TIMESTAMP(),
+               MAX({timestamp_col}), HOUR) as hours_delay
+        FROM `{table}`
+        &quot;&quot;&quot;
+        row = list(self.client.query(query).result())[0]
+        delay = row.hours_delay or 999
+
+        passed = delay &lt;= max_hours
+        self.results.append(CheckResult(
+            check_name=&quot;freshness&quot;, table=table, passed=passed,
+            severity=Severity.CRITICAL, value=delay, threshold=max_hours,
+            message=f&quot;Last update {delay}h ago (max: {max_hours}h)&quot;
+        ))
+
+    # ── CHECK 3: Volume Anomaly Detection (Z-Score) ──
+    def check_volume_anomaly(self, table: str, z_threshold: float = 3.0):
+        &quot;&quot;&quot;Detect unusual row counts using statistical Z-score.
+        Why: A sudden drop = broken source. A sudden spike = duplicate data.
+        Both corrupt downstream analytics.&quot;&quot;&quot;
+
+        query = f&quot;&quot;&quot;
+        WITH daily AS (
+            SELECT DATE(_ingestion_ts) as dt, COUNT(*) as cnt
+            FROM `{table}`
+            WHERE DATE(_ingestion_ts) &gt;= DATE_SUB(CURRENT_DATE(), INTERVAL 30 DAY)
+            GROUP BY 1
+        ), stats AS (
+            SELECT AVG(cnt) as mu, STDDEV(cnt) as sigma FROM daily WHERE dt &lt; CURRENT_DATE()
+        )
+        SELECT d.cnt as today, s.mu, s.sigma,
+               ABS(d.cnt - s.mu) / NULLIF(s.sigma, 0) as z
+        FROM daily d, stats s WHERE d.dt = CURRENT_DATE()
+        &quot;&quot;&quot;
+        row = list(self.client.query(query).result())[0]
+        z = row.z or 0
+
+        passed = z &lt;= z_threshold
+        self.results.append(CheckResult(
+            check_name=&quot;volume_anomaly&quot;, table=table, passed=passed,
+            severity=Severity.WARNING, value=z, threshold=z_threshold,
+            message=f&quot;Today: {row.today} rows (mean: {row.mu:.0f}, z: {z:.2f})&quot;
+        ))
+
+    # ── CHECK 4: Null Rate ──
+    def check_null_rate(self, table: str, column: str, max_pct: float = 1.0):
+        &quot;&quot;&quot;Ensure critical columns are populated.
+        Why: A broken API might return empty fields that pass type checks
+        but have no actual values.&quot;&quot;&quot;
+
+        query = f&quot;&quot;&quot;
+        SELECT ROUND(COUNTIF({column} IS NULL) * 100.0 / COUNT(*), 2) as pct
+        FROM `{table}` WHERE DATE(_ingestion_ts) = CURRENT_DATE()
+        &quot;&quot;&quot;
+        row = list(self.client.query(query).result())[0]
+        pct = row.pct or 0
+
+        passed = pct &lt;= max_pct
+        self.results.append(CheckResult(
+            check_name=&quot;null_rate&quot;, table=table, passed=passed,
+            severity=Severity.CRITICAL, value=pct, threshold=max_pct,
+            message=f&quot;{column}: {pct}% null (max: {max_pct}%)&quot;
+        ))
+
+    # ── CHECK 5: Business Rule ──
+    def check_business_rule(self, table: str, rule_name: str, query: str, max_violations: int = 0):
+        &quot;&quot;&quot;Custom domain-specific validation.
+        Example: revenue should never be negative, dates should not be in the future.&quot;&quot;&quot;
+
+        row = list(self.client.query(query).result())[0]
+        violations = row.violations
+
+        passed = violations &lt;= max_violations
+        self.results.append(CheckResult(
+            check_name=f&quot;business_rule_{rule_name}&quot;, table=table, passed=passed,
+            severity=Severity.CRITICAL, value=violations, threshold=max_violations,
+            message=f&quot;{rule_name}: {violations} violations (max: {max_violations})&quot;
+        ))
+
+    # ── EXECUTE &amp; REPORT ──
+    def run_suite(self, table: str):
+        &quot;&quot;&quot;Run all checks and determine pass/fail.&quot;&quot;&quot;
+        critical_failures = [r for r in self.results if not r.passed and r.severity == Severity.CRITICAL]
+        warnings = [r for r in self.results if not r.passed and r.severity == Severity.WARNING]
+
+        # Log all results to BigQuery audit table
+        self._log_results()
+
+        if critical_failures:
+            self._send_alert(critical_failures, level=&quot;critical&quot;)
+            raise Exception(
+                f&quot;DATA QUALITY BLOCKED: {len(critical_failures)} critical failures:\n&quot;
+                + &quot;\n&quot;.join(f&quot;  - {r.check_name}: {r.message}&quot; for r in critical_failures)
+            )
+
+        if warnings:
+            self._send_alert(warnings, level=&quot;warning&quot;)
+
+        logging.info(f&quot;Quality gate PASSED: {len(self.results)} checks, {len(warnings)} warnings&quot;)
+
+    def _log_results(self):
+        &quot;&quot;&quot;Persist check results to audit table for historical tracking.&quot;&quot;&quot;
+        rows = [
+            {&quot;check&quot;: r.check_name, &quot;table&quot;: r.table, &quot;passed&quot;: r.passed,
+             &quot;severity&quot;: r.severity.value, &quot;value&quot;: r.value,
+             &quot;threshold&quot;: r.threshold, &quot;message&quot;: r.message, &quot;ts&quot;: r.checked_at}
+            for r in self.results
+        ]
+        self.client.insert_rows_json(&quot;project.governance.dq_audit_log&quot;, rows)
+
+    def _send_alert(self, failures, level):
+        &quot;&quot;&quot;Route alerts to Slack + email.&quot;&quot;&quot;
+        # Production: Slack webhook + PagerDuty for critical
+        logging.error(f&quot;[{level.upper()}] {len(failures)} quality check failures&quot;)
+
+
+# ── Usage in Airflow DAG task ──
+def airflow_quality_gate(**context):
+    dq = DataQualityFramework('tcs-prod')
+    table = 'tcs-prod.analytics.fact_transactions'
+
+    dq.check_schema(table, {
+        'event_id': 'STRING', 'customer_id': 'STRING',
+        'amount': 'NUMERIC', 'date_partition': 'DATE'
+    })
+    dq.check_freshness(table, '_ingestion_ts', max_hours=6)
+    dq.check_volume_anomaly(table, z_threshold=3.0)
+    dq.check_null_rate(table, 'customer_id', max_pct=0.5)
+    dq.check_null_rate(table, 'amount', max_pct=2.0)
+    dq.check_business_rule(table, 'no_negative_revenue',
+        f&quot;SELECT COUNTIF(amount &lt; 0) as violations FROM `{table}` WHERE DATE(_ingestion_ts) = CURRENT_DATE()&quot;)
+
+    dq.run_suite(table)
+</code></pre>
+<p><strong>Result:</strong> Bad-record rates dropped from <strong>3–5% to under 1%</strong>. Issues now caught in minutes, not days.</p>
+<hr />
+<h2>4. Data Governance &amp; Access Control</h2>
+<h3>IAM Architecture</h3>
+<pre><code>┌────────────────────────────────────────────────────────────────┐
+│                    ACCESS CONTROL MODEL                        │
+│                                                                │
+│  PRINCIPLE OF LEAST PRIVILEGE                                  │
+│  Every user/service gets the minimum access needed.            │
+│                                                                │
+│  ┌─────────────┐   ┌──────────────┐   ┌─────────────────┐    │
+│  │ DATA ENG    │   │ ANALYSTS     │   │ SERVICE ACCTS   │    │
+│  │─────────────│   │──────────────│   │─────────────────│    │
+│  │ BQ Admin    │   │ BQ Data      │   │ BQ Job User     │    │
+│  │ GCS Admin   │   │   Viewer     │   │ GCS Object      │    │
+│  │ Dataproc    │   │ Looker       │   │   Creator        │    │
+│  │   Admin     │   │   Viewer     │   │ Scoped to        │    │
+│  │ Composer    │   │ NO write     │   │   single pipeline│    │
+│  │   Admin     │   │   access     │   │ NO console       │    │
+│  └─────────────┘   └──────────────┘   │   access         │    │
+│                                        └─────────────────┘    │
+│                                                                │
+│  ROW-LEVEL SECURITY (BigQuery)                                 │
+│  Analysts see only their region's data.                        │
+│  Finance sees revenue. Marketing sees engagement. Not both.    │
+└────────────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="language-sql">-- Row-level security in BigQuery
+-- Why: Finance team should see revenue data for all regions.
+-- Regional teams should see only their own region's data.
+-- This is enforced at the query engine level — no application logic needed.
+
+-- Create access policy
+CREATE ROW ACCESS POLICY region_filter
+ON `project.analytics.fact_transactions`
+GRANT TO ('group:south-analysts@company.com')
+FILTER USING (region = 'south');
+
+CREATE ROW ACCESS POLICY finance_full_access
+ON `project.analytics.fact_transactions`
+GRANT TO ('group:finance@company.com')
+FILTER USING (TRUE);  -- Finance sees everything
+
+-- Column-level security for PII
+-- Why: Customer names and emails are PII. Analysts need customer_id
+-- for joins but should never see raw PII.
+ALTER TABLE `project.analytics.dim_customer`
+ALTER COLUMN email SET DATA TYPE STRING
+OPTIONS (policy_tags = 'projects/project/locations/asia-south1/taxonomies/123/policyTags/pii');
+</code></pre>
+<h3>Data Lineage Tracking</h3>
+<pre><code class="language-python">&quot;&quot;&quot;
+Lightweight lineage tracker — records what data went where.
+
+Why lineage matters:
+- &quot;Where did this number come from?&quot; → Trace back from dashboard to source
+- &quot;What breaks if I change table X?&quot; → See all downstream dependencies
+- Compliance/audit: Prove data handling meets regulatory requirements
+&quot;&quot;&quot;
+
+from google.cloud import bigquery
+from datetime import datetime
+
+class LineageTracker:
+    def __init__(self, project_id: str):
+        self.client = bigquery.Client(project=project_id)
+
+    def record(self, source: str, target: str, pipeline: str,
+               transformation: str, row_count: int):
+        self.client.insert_rows_json(
+            f&quot;{self.client.project}.governance.data_lineage&quot;,
+            [{
+                &quot;source_table&quot;: source,
+                &quot;target_table&quot;: target,
+                &quot;pipeline_name&quot;: pipeline,
+                &quot;transformation_type&quot;: transformation,
+                &quot;row_count&quot;: row_count,
+                &quot;executed_at&quot;: datetime.utcnow().isoformat(),
+                &quot;executed_by&quot;: pipeline,
+            }]
+        )
+
+# Used in every pipeline step
+lineage = LineageTracker('tcs-prod')
+lineage.record(
+    source=&quot;tcs-prod.raw.transactions&quot;,
+    target=&quot;tcs-prod.analytics.fact_transactions&quot;,
+    pipeline=&quot;daily_etl_pipeline&quot;,
+    transformation=&quot;deduplicate + enrich + aggregate&quot;,
+    row_count=150000
+)
+</code></pre>
+<hr />
+<h2>5. Cost Optimization Strategies</h2>
+<h3>What We Did &amp; How Much It Saved</h3>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Implementation</th>
+<th>Savings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Table partitioning</strong></td>
+<td><code>PARTITION BY date</code> — queries scan only relevant days</td>
+<td>~60–80% less bytes scanned</td>
+</tr>
+<tr>
+<td><strong>Table clustering</strong></td>
+<td><code>CLUSTER BY customer_id, type</code> — data sorted within partitions</td>
+<td>~20–30% faster queries</td>
+</tr>
+<tr>
+<td><strong>Partition filter requirement</strong></td>
+<td><code>require_partition_filter = true</code> — prevents accidental full scans</td>
+<td>Prevents $100+ accidental queries</td>
+</tr>
+<tr>
+<td><strong>Ephemeral Dataproc clusters</strong></td>
+<td>Create before job, delete after</td>
+<td>~$2,750/month saved vs. always-on</td>
+</tr>
+<tr>
+<td><strong>Incremental processing</strong></td>
+<td>Only process new records (watermark-based)</td>
+<td>~80% less compute per run</td>
+</tr>
+<tr>
+<td><strong>Storage tiering</strong></td>
+<td>Move data &gt;90 days old to long-term GCS storage class</td>
+<td>~50% storage cost reduction</td>
+</tr>
+<tr>
+<td><strong>Query cost quotas</strong></td>
+<td>Per-user daily byte scan limits</td>
+<td>Prevents runaway analyst queries</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-sql">-- Cost guardrails in BigQuery
+
+-- 1. Force partition filters (prevents full table scans)
+ALTER TABLE `project.analytics.fact_transactions`
+SET OPTIONS (require_partition_filter = true);
+
+-- 2. Set maximum bytes billed per query (cost ceiling)
+-- Why: An analyst accidentally running SELECT * on a 10TB table
+-- could cost hundreds of dollars. This caps it.
+-- Set in BigQuery connection/session settings:
+-- maximumBytesBilled = 10GB (roughly $0.05 per query max)
+
+-- 3. Materialized views for expensive repeated queries
+-- Why: If 20 analysts run the same daily summary query,
+-- compute it once and cache the result.
+CREATE MATERIALIZED VIEW `project.analytics.mv_daily_summary`
+OPTIONS (enable_refresh = true, refresh_interval_minutes = 60)
+AS
+SELECT
+    date_partition,
+    customer_segment,
+    COUNT(*) as transactions,
+    SUM(revenue) as total_revenue,
+    AVG(revenue) as avg_revenue
+FROM `project.analytics.fact_transactions`
+GROUP BY 1, 2;
+</code></pre>
+<h3>Cost Monitoring</h3>
+<pre><code class="language-python">&quot;&quot;&quot;
+Automated cost monitoring — alerts when spending exceeds thresholds.
+Why: Cloud costs creep up silently. By the time you see the monthly bill,
+it's too late. Daily monitoring catches issues early.
+&quot;&quot;&quot;
+
+from google.cloud import bigquery
+import logging
+
+def check_daily_costs(project_id: str, daily_budget_usd: float = 50.0):
+    client = bigquery.Client(project=project_id)
+
+    query = &quot;&quot;&quot;
+    SELECT
+        SUM(total_bytes_billed) / POW(1024, 4) as tb_billed,
+        SUM(total_bytes_billed) / POW(1024, 4) * 6.25 as estimated_cost_usd
+    FROM `region-asia-south1`.INFORMATION_SCHEMA.JOBS
+    WHERE creation_time &gt;= TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), DAY)
+      AND job_type = 'QUERY'
+      AND state = 'DONE'
+    &quot;&quot;&quot;
+    row = list(client.query(query).result())[0]
+    cost = row.estimated_cost_usd or 0
+
+    if cost &gt; daily_budget_usd:
+        logging.error(
+            f&quot;COST ALERT: Today's BigQuery spend ${cost:.2f} &quot;
+            f&quot;exceeds budget ${daily_budget_usd:.2f}&quot;
+        )
+        # Send Slack alert with top costly queries
+    elif cost &gt; daily_budget_usd * 0.8:
+        logging.warning(f&quot;Cost warning: ${cost:.2f} — approaching daily budget&quot;)
+
+    return cost
+</code></pre>
+<hr />
+<h2>6. AI-Powered Data Quality Intelligence</h2>
+<h3>6.1 Beyond Z-Scores: Embedding-Based Anomaly Detection</h3>
+<p><strong>The problem:</strong> Z-score catches volume anomalies (row count spikes/drops), but misses <strong>content anomalies</strong> — a table has the right number of rows, but the data inside is wrong.</p>
+<p><strong>The solution:</strong> Embed daily data distributions as vectors and use cosine similarity to detect when today's data "looks different" from historical patterns.</p>
+<pre><code class="language-python">class SemanticAnomalyDetector:
+    &quot;&quot;&quot;Detect data content anomalies using embeddings.
+
+    How it works:
+    1. Summarize today's data distribution as text:
+       &quot;50% COMPLETED, 30% PENDING, 20% FAILED, avg_amount=45000&quot;
+    2. Convert to 1536-dim embedding vector (via transformer)
+    3. Compare against last 30 days' distribution embeddings (cosine similarity)
+    4. If today's vector is far from historical cluster → anomaly
+
+    Why embeddings (not just statistical rules)?
+    - Rules catch known patterns: &quot;null rate &gt; 5%&quot;
+    - Embeddings catch UNKNOWN patterns: distribution shifted subtly
+    - &quot;FAILED transactions went from 5% to 12%&quot; = no single metric triggers,
+      but the embedding vector shifts significantly
+
+    The transformer produces contextual embeddings:
+    - &quot;50% COMPLETED&quot; next to &quot;avg_amount=45000&quot; gets a DIFFERENT vector
+      than &quot;50% COMPLETED&quot; next to &quot;avg_amount=5000&quot;
+    - Self-attention captures the RELATIONSHIP between distribution features
+    &quot;&quot;&quot;
+
+    def __init__(self, embedding_engine):
+        self.engine = embedding_engine
+        self.history = []
+
+    def check_distribution(self, table: str, date: str) -&gt; dict:
+        # Get today's distribution summary
+        summary = self._get_distribution_summary(table, date)
+        today_vec = self.engine.embed_text(summary)
+
+        # Compare against historical embeddings
+        if len(self.history) &lt; 7:
+            self.history.append(today_vec)
+            return {&quot;status&quot;: &quot;LEARNING&quot;, &quot;days_collected&quot;: len(self.history)}
+
+        similarities = [
+            self.engine.cosine_similarity(today_vec.vector, h.vector)
+            for h in self.history[-30:]
+        ]
+        avg_similarity = sum(similarities) / len(similarities)
+
+        # If today's distribution is far from historical patterns → anomaly
+        if avg_similarity &lt; 0.75:
+            return {
+                &quot;status&quot;: &quot;ANOMALY&quot;,
+                &quot;similarity&quot;: avg_similarity,
+                &quot;message&quot;: f&quot;Data distribution shifted significantly (sim={avg_similarity:.2f})&quot;,
+                &quot;summary&quot;: summary
+            }
+
+        self.history.append(today_vec)
+        return {&quot;status&quot;: &quot;NORMAL&quot;, &quot;similarity&quot;: avg_similarity}
+
+    def _get_distribution_summary(self, table: str, date: str) -&gt; str:
+        &quot;&quot;&quot;Generate text summary of data distribution for embedding.&quot;&quot;&quot;
+        # In production: queries BigQuery for value distributions
+        return f&quot;Table {table} on {date}: status_dist=COMPLETED:50%,PENDING:30%,FAILED:20%, avg_amount=45000, null_rate=0.3%&quot;
+</code></pre>
+<h3>6.2 RAG for Data Quality Querying</h3>
+<p><strong>The problem:</strong> Business users ask "Is our customer data reliable?" or "What was the last data quality issue?" — they can't query DQ audit tables.</p>
+<p><strong>The solution:</strong> RAG pipeline that searches DQ audit logs and quality metrics, then answers in plain English.</p>
+<pre><code class="language-python">class DQQueryEngine:
+    &quot;&quot;&quot;Natural language querying over data quality metrics.
+
+    RAG Architecture:
+    1. RETRIEVAL: Question → embed → cosine search against DQ audit log descriptions
+    2. AUGMENTATION: Retrieved DQ results injected into LLM prompt
+    3. GENERATION: LLM generates plain English answer
+
+    Vector Store indexes:
+    - All DQ check results (schema validation, freshness, volume, null rate)
+    - Historical anomaly alerts
+    - Resolution notes from past incidents
+    &quot;&quot;&quot;
+
+    def __init__(self, vector_store, llm):
+        self.vector_store = vector_store
+        self.llm = llm
+
+    def ask(self, question: str) -&gt; str:
+        # Step 1: Retrieve relevant DQ records
+        context = self.vector_store.search(question, top_k=5)
+
+        # Step 2: Generate answer
+        prompt = f&quot;&quot;&quot;You are a data quality analyst. Answer the user's question
+using ONLY the DQ audit records below.
+
+DQ RECORDS (retrieved via semantic search):
+{[c.schema.description for c in context]}
+
+Question: {question}
+
+Provide: current status, any issues, and recommended actions.&quot;&quot;&quot;
+
+        return self.llm.generate(prompt)
+
+# Examples:
+# Q: &quot;Is the transactions table healthy?&quot;
+# A: &quot;Yes — all 5 quality checks passed in the last run.
+#     Schema: valid. Freshness: 2h (within 6h SLA).
+#     Null rate: 0.3% (under 1% threshold).
+#     Volume: normal (z-score 0.4).&quot;
+
+# Q: &quot;What was our worst data quality incident last month?&quot;
+# A: &quot;On March 15, a schema drift in the CRM API added an unexpected
+#     'phone_v2' column while removing 'phone'. This broke 3 downstream
+#     pipelines. Detected in 4 minutes by schema validation check.
+#     Fixed by updating the ingestion schema mapping.&quot;
+</code></pre>
+<h3>6.3 Agentic AI for Data Quality Root Cause Analysis</h3>
+<p>When a DQ check fails, an agent autonomously traces back to the root cause:</p>
+<pre><code class="language-python">class DQInvestigationAgent:
+    &quot;&quot;&quot;Autonomous root cause analysis for data quality failures.
+
+    ReAct pattern with domain-specific tools:
+    - check_upstream: Was the source data bad?
+    - check_transform: Did the Spark job introduce the issue?
+    - check_schema_changes: Did the source API change?
+    - check_volume_history: Is this a pattern or one-off?
+    - alert: Notify the team with findings
+
+    Why agentic (not rule-based)?
+    - Rule-based: &quot;If null_rate &gt; 5%, check source&quot; — handles 1 path
+    - Agent: Investigates dynamically based on what it finds at each step
+    - Agent might discover: &quot;Source is fine, but Spark dedup removed 
+      valid records due to wrong partition key&quot; — no rule covers this
+    &quot;&quot;&quot;
+
+    def investigate(self, check_result: dict) -&gt; dict:
+        steps = []
+        for step in range(6):
+            action = self.llm.generate(f&quot;&quot;&quot;
+DQ Failure: {check_result}
+Investigation so far: {steps}
+Tools: [check_upstream, check_transform, check_schema_changes, 
+        check_volume_history, query_audit_log, alert]
+
+THOUGHT: What's the most likely root cause? What should I check?
+ACTION: {{&quot;tool&quot;: &quot;...&quot;, &quot;params&quot;: {{}}}}
+Or: {{&quot;tool&quot;: &quot;DONE&quot;, &quot;root_cause&quot;: &quot;...&quot;, &quot;fix&quot;: &quot;...&quot;, &quot;prevention&quot;: &quot;...&quot;}}&quot;&quot;&quot;)
+
+            if action[&quot;tool&quot;] == &quot;DONE&quot;:
+                return {
+                    &quot;steps&quot;: steps,
+                    &quot;root_cause&quot;: action[&quot;root_cause&quot;],
+                    &quot;fix&quot;: action[&quot;fix&quot;],
+                    &quot;prevention&quot;: action[&quot;prevention&quot;]
+                }
+            result = self.tools[action[&quot;tool&quot;]](**action[&quot;params&quot;])
+            steps.append({&quot;thought&quot;: action.get(&quot;thought&quot;), &quot;result&quot;: result})
+
+# Agent trace example:
+# Step 1: check_upstream → &quot;Source API returned 200 OK, data looks normal&quot;
+# Step 2: check_transform → &quot;Spark job completed, but output has 40% fewer rows&quot;
+# Step 3: check_schema_changes → &quot;Source added new status 'PROCESSING' not in our whitelist&quot;
+# Step 4: DONE → Root cause: New status value filtered out by business rule check.
+#         Fix: Add 'PROCESSING' to allowed statuses.
+#         Prevention: Use allowlist from source API dynamically instead of hardcoded.
+</code></pre>
+<p><strong>Result:</strong> DQ incident investigation time reduced from <strong>~45 min manual debugging to ~10 min autonomous analysis</strong>. Root cause identified correctly 85%+ of the time.</p>
+<hr />
+<h2>7. End-to-End Quality Gate Flow</h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant SRC as Source Systems
+    participant ING as Ingestion (Beam)
+    participant DQ1 as Schema Check
+    participant TRN as Transform (Spark)
+    participant DQ2 as Volume + Null Check
+    participant BQ as BigQuery
+    participant DQ3 as Freshness + Business Rules
+    participant DASH as Dashboards
+
+    SRC-&gt;&gt;ING: Raw data
+    ING-&gt;&gt;DQ1: Validate schema
+    alt Schema fails
+        DQ1-&gt;&gt;DQ1: Route to Dead Letter Queue
+        DQ1--&gt;&gt;ING: Alert: schema drift detected
+    else Schema passes
+        DQ1-&gt;&gt;TRN: Clean data
+    end
+
+    TRN-&gt;&gt;DQ2: Check volume &amp; nulls
+    alt Anomaly detected
+        DQ2--&gt;&gt;TRN: Alert: Z-score &gt; 3
+        Note over DQ2: Pipeline continues&lt;br/&gt;(warning, not block)
+    end
+
+    DQ2-&gt;&gt;BQ: Load to warehouse
+    BQ-&gt;&gt;DQ3: Post-load validation
+    alt Critical failure
+        DQ3--&gt;&gt;BQ: BLOCK: Roll back load
+        DQ3--&gt;&gt;DQ3: Page on-call engineer
+    else All checks pass
+        DQ3-&gt;&gt;DASH: Data available for analysts
+    end
+</code></pre>
+<hr />
+<h2>8. Results Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bad record rate</strong></td>
+<td>3–5%</td>
+<td>&lt;1%</td>
+</tr>
+<tr>
+<td><strong>Issue detection time</strong></td>
+<td>Days (manual discovery)</td>
+<td>Minutes (automated alerts)</td>
+</tr>
+<tr>
+<td><strong>Access control</strong></td>
+<td>Everyone = admin</td>
+<td>Role-based, row-level, column-level</td>
+</tr>
+<tr>
+<td><strong>Audit trail</strong></td>
+<td>None</td>
+<td>Full lineage + DQ logs</td>
+</tr>
+<tr>
+<td><strong>Query costs</strong></td>
+<td>Uncontrolled</td>
+<td>Partitioned, capped, monitored</td>
+</tr>
+<tr>
+<td><strong>Cluster costs</strong></td>
+<td>Always-on (~$3K/mo)</td>
+<td>Ephemeral (~$250/mo)</td>
+</tr>
+<tr>
+<td><strong>DQ investigation (AI agent)</strong></td>
+<td>~45 min manual</td>
+<td>~10 min autonomous</td>
+</tr>
+<tr>
+<td><strong>Content anomaly detection</strong></td>
+<td>Not possible (rules only)</td>
+<td>Embedding-based detection</td>
+</tr>
+<tr>
+<td><strong>Compliance readiness</strong></td>
+<td>Manual evidence gathering</td>
+<td>Automated lineage + audit logs</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>9. Why This Matters — The Business Translation</h2>
+<table>
+<thead>
+<tr>
+<th>Technical Achievement</th>
+<th>What Business Stakeholders Care About</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Z-score anomaly detection on row counts</td>
+<td>"We catch data problems before they hit your reports"</td>
+</tr>
+<tr>
+<td>Row-level security + column masking</td>
+<td>"Customer PII is protected. We're audit-ready."</td>
+</tr>
+<tr>
+<td>Partition filters + cost quotas</td>
+<td>"Cloud bill is predictable. No surprise charges."</td>
+</tr>
+<tr>
+<td>Automated lineage tracking</td>
+<td>"We can trace any number in any report back to its source in seconds"</td>
+</tr>
+<tr>
+<td>Dead letter queues</td>
+<td>"Bad data is captured for review, never silently dropped or pushed to dashboards"</td>
+</tr>
+</tbody>
+</table>
+            </article>
+        </div>
+    </main>
+
+    <!-- Mermaid.js for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose',
+                themeVariables: {
+                    background: '#0d1117',
+                    primaryColor: '#1f6feb',
+                    primaryTextColor: '#c9d1d9',
+                    lineColor: '#8b949e'
+                }
+            });
+            
+            // Convert code blocks with language-mermaid to div.mermaid
+            document.querySelectorAll('pre code.language-mermaid').forEach(function(el) {
+                let pre = el.parentElement;
+                let div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = el.textContent;
+                pre.parentNode.replaceChild(div, pre);
+            });
+        });
+    </script>
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>

@@ -12,6 +12,7 @@ Implements:
 """
 
 from google.cloud import bigquery
+from google.auth.exceptions import DefaultCredentialsError
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
@@ -46,7 +47,13 @@ class GovernanceManager:
 
     def __init__(self, project_id: str):
         self.project_id = project_id
-        self.client = bigquery.Client(project=project_id)
+        try:
+            self.client = bigquery.Client(project=project_id)
+            self.mock_mode = False
+        except (DefaultCredentialsError, Exception) as e:
+            logger.warning(f"Could not initialize BigQuery client: {e}. Running in MOCK mode.")
+            self.client = None
+            self.mock_mode = True
 
     def record_lineage(self, source: str, target: str,
                        pipeline: str, transformation: str,
@@ -89,6 +96,9 @@ class GovernanceManager:
 
     def _write_lineage(self, record: LineageRecord):
         """Persist lineage record to BigQuery."""
+        if self.mock_mode:
+            logger.info(f"[MOCK BQ] Writing lineage: {record.source_table} -> {record.target_table}")
+            return
         try:
             self.client.insert_rows_json(
                 f"{self.project_id}.governance.data_lineage",
@@ -99,6 +109,9 @@ class GovernanceManager:
 
     def _write_audit(self, entry: AuditEntry):
         """Persist audit entry to BigQuery."""
+        if self.mock_mode:
+            logger.info(f"[MOCK BQ] Writing audit: {entry.action} on {entry.resource}")
+            return
         try:
             self.client.insert_rows_json(
                 f"{self.project_id}.governance.audit_log",
